@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Timeline;
 
 public class PlayerMovement : MonoBehaviour
@@ -9,17 +10,25 @@ public class PlayerMovement : MonoBehaviour
     private float jumpingPower = 16f;
     //private float fallLimit = -10f;
     private bool isFacingRight = true;
+    private InputAction jumpAction;
+    private InputAction moveAction;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     //[SerializeField] private Transform respawnPoint;
     [SerializeField] private LayerMask groundLayer;
 
+    private void Start()
+    {
+       jumpAction = InputSystem.actions.FindAction("Jump");
+       moveAction = InputSystem.actions.FindAction("Move");
+    }
+
     void Update()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
+        horizontal = moveAction.ReadValue<Vector2>().x;
 
-        if(Input.GetButtonDown("Jump") && isGrounded())
+        if(jumpAction.IsPressed() && isGrounded())
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
         }
