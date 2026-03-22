@@ -2,16 +2,20 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Timeline;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public TMP_Text stateText;
+    
     private float horizontal;
-    private float speed = 8f;
-    private float jumpingPower = 16f;
+    [SerializeField] private float speed = 8f;
+    [SerializeField] private float jumpingPower = 16f;
     //private float fallLimit = -10f;
     private bool isFacingRight = true;
     private InputAction jumpAction;
     private InputAction moveAction;
+    private PlayerState currentState;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -33,11 +37,25 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
         }
 
-        //if(transform.position.y < fallLimit)
-        //{
-        //    transform.position = respawnPoint.position;
-        //}
+        if(!isGrounded())
+        {
+            if(rb.linearVelocity.y > 0)
+                currentState = PlayerState.Jumping;
+            else
+                currentState = PlayerState.Falling;
+        }
+        else if(Mathf.Abs(horizontal) > 0.1f)
+        {
+            currentState = PlayerState.Running;
+        }
+        else
+        {
+            currentState = PlayerState.Idle;
+        }
 
+        if(stateText != null)
+            stateText.text = "Player: " + currentState.ToString();
+        
         Flip();
     }
 
