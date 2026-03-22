@@ -21,7 +21,24 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
     }
+    public void TakeDamage(float amount, Vector2 damageDirection)
+    {
+        PlayerMovement movement = GetComponent<PlayerMovement>();
 
+        if (movement != null && movement.IsBlocking())
+        {
+            float facingDir = movement.IsFacingRight() ? 1f : -1f;
+            float dot = Vector2.Dot(new Vector2(facingDir, 0), damageDirection.normalized);
+
+            if (dot > 0f)
+            {
+                Debug.Log("block");
+                return;
+            }
+        }
+
+        TakeDamage(amount); 
+    }
     public void TakeDamage(float amount)
     {
         if (!IsAlive) return;

@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b1bc7e6d-8936-42e6-b47b-453b0f74c48b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.platformer-game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.platformer-game/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MainInputActions.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainInputActions.inputactions" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerHealth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerHealth.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerState.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +87,8 @@
       <workItem from="1774175312631" duration="157000" />
       <workItem from="1774175675822" duration="255000" />
       <workItem from="1774176043433" duration="80000" />
+      <workItem from="1774176140082" duration="1460000" />
+      <workItem from="1774177680948" duration="695000" />
     </task>
     <servers />
   </component>

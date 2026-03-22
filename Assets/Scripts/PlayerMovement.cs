@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     private InputAction jumpAction;
     private InputAction moveAction;
     private PlayerState currentState;
+    private bool isBlocking = false;
+    private InputAction blockAction;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -26,12 +28,24 @@ public class PlayerMovement : MonoBehaviour
     {
        jumpAction = InputSystem.actions.FindAction("Jump");
        moveAction = InputSystem.actions.FindAction("Move");
+       blockAction = InputSystem.actions.FindAction("Block");
     }
 
     void Update()
     {
         horizontal = moveAction.ReadValue<Vector2>().x;
 
+        isBlocking = blockAction.IsPressed();
+
+        if (isBlocking)
+        {
+            horizontal = 0f;
+            currentState = PlayerState.Blocking;
+            if (stateText != null)
+                stateText.text = "Player: " + currentState.ToString();
+            Flip(); 
+            return; 
+        }
         if(jumpAction.IsPressed() && isGrounded())
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
@@ -79,4 +93,6 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = localScale;
         }
     }
+    public bool IsBlocking() => isBlocking;
+    public bool IsFacingRight() => isFacingRight;
 }
