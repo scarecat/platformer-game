@@ -18,17 +18,18 @@ public class PlayerMovement : MonoBehaviour
     private PlayerState currentState;
     private bool isBlocking = false;
     private InputAction blockAction;
+    private Rigidbody2D rb;
 
-    [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     //[SerializeField] private Transform respawnPoint;
     [SerializeField] private LayerMask groundLayer;
 
     private void Start()
     {
-       jumpAction = InputSystem.actions.FindAction("Jump");
-       moveAction = InputSystem.actions.FindAction("Move");
-       blockAction = InputSystem.actions.FindAction("Block");
+      rb = GetComponent<Rigidbody2D>();
+      jumpAction = InputSystem.actions.FindAction("Jump");
+      moveAction = InputSystem.actions.FindAction("Move");
+      blockAction = InputSystem.actions.FindAction("Block");
     }
 
     void Update()

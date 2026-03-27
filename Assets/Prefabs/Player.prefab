@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6926439439711245908}
   - component: {fileID: 7087557111428891562}
   - component: {fileID: 8619381701799608058}
+  - component: {fileID: 897178452157901513}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -138,7 +139,6 @@ MonoBehaviour:
   stateText: {fileID: 0}
   speed: 8
   jumpingPower: 16
-  rb: {fileID: 719485175130414777}
   groundCheck: {fileID: 4850114038179144462}
   groundLayer:
     serializedVersion: 2
@@ -202,6 +202,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &897178452157901513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6747324091440938089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f1af43f8e5c4880ad238579c801a10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  maxHealth: 100
+  currentHealth: 100
+  dieOnZeroHealth: 1
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &9219450445535272276
 GameObject:
   m_ObjectHideFlags: 0
