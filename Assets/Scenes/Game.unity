@@ -438,11 +438,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6926439439711245908, guid: dc509504d10455fc29ed186e0cea3cfc, type: 3}
       propertyPath: speed
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6926439439711245908, guid: dc509504d10455fc29ed186e0cea3cfc, type: 3}
       propertyPath: jumpingPower
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
