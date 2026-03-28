@@ -14,7 +14,7 @@ public class PlayerHitbox : MonoBehaviour
     {
         if (collision.collider.CompareTag("Enemy"))
         {
-           IHealth healthComponent = collision.collider.gameObject.GetComponent<IHealth>();
+           EntityHealth healthComponent = collision.collider.gameObject.GetComponent<EntityHealth>();
            healthComponent.TakeDamage(damage);
         }
         
@@ -24,7 +24,7 @@ public class PlayerHitbox : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-           IHealth healthComponent = other.gameObject.GetComponent<IHealth>();
+           EntityHealth healthComponent = other.gameObject.GetComponent<EntityHealth>();
            healthComponent.TakeDamage(damage);
         }
         

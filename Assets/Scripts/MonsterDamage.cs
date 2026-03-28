@@ -4,11 +4,11 @@ public class MonsterDamage : MonoBehaviour
 {
     public int damage;
 
-    private IHealth playerHealth;
+    private EntityHealth playerHealth;
 
 
     void Start() {
-      playerHealth = GameObject.Find("Player").GetComponent<IHealth>();
+      playerHealth = GameObject.Find("Player").GetComponent<EntityHealth>();
     }
 
     private void OnCollisionStay2D(Collision2D collision)

@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EntityHealth : MonoBehaviour, IHealth
+public class EntityHealth : MonoBehaviour
 {
     [SerializeField] protected float maxHealth = 100f;
     [SerializeField] protected float currentHealth;
