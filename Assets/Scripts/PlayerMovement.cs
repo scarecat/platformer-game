@@ -5,6 +5,8 @@ using UnityEngine.Timeline;
 using TMPro;
 using Unity.VisualScripting;
 using System;
+using System.Collections;
+using UnityEngine.Playables;
 
 public enum PlayerState
 {
@@ -12,7 +14,8 @@ public enum PlayerState
     Running,
     Jumping,
     Falling,
-    Blocking
+    Blocking,
+    Attacking
 }
 
 public class PlayerMovement : MonoBehaviour
@@ -22,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private int extraJumpCount = 1;
     private int currentExtraJumpCount;
 
+    private GameObject playerHitbox;
 
     [SerializeField] private float speed = 8f;
     [SerializeField] private float jumpingPower = 16f;
@@ -29,15 +33,19 @@ public class PlayerMovement : MonoBehaviour
     private bool isFacingRight = true;
     private InputAction jumpAction;
     private InputAction moveAction;
-    private PlayerState playerState;
     private InputAction blockAction;
+    private InputAction attackAction;
+    private Animator animator;
     private Rigidbody2D rb;
     private Vector2 movementInput;
+    public PlayerState playerState;
     private bool jumpedThisFrame = false;
 
     [SerializeField] private Transform groundCheck;
     //[SerializeField] private Transform respawnPoint;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float knockbackForce = 10.0f;
+
 
     private void Start()
     {
@@ -45,23 +53,52 @@ public class PlayerMovement : MonoBehaviour
         jumpAction = InputSystem.actions.FindAction("Jump");
         moveAction = InputSystem.actions.FindAction("Move");
         blockAction = InputSystem.actions.FindAction("Block");
+        attackAction = InputSystem.actions.FindAction("Attack");
 
-        jumpAction.performed += (ctx) =>
-        {
-            jumpedThisFrame = true;
-        };
+        jumpAction.performed += (ctx) => jumpedThisFrame = true;
 
+        playerHitbox = GameObject.Find("Hitbox");
+        playerHitbox.SetActive(false);
 
-      currentExtraJumpCount = extraJumpCount;
+        currentExtraJumpCount = extraJumpCount;
+
+        animator = GetComponent<Animator>();
     }
 
-    void HandleJumping()
+    private IEnumerator Attack()
+    {
+        playerState = PlayerState.Attacking;
+        animator.SetTrigger("attack");
+        yield return new WaitForSeconds(1.0f/12);
+        playerHitbox.SetActive(true);
+        yield return new WaitForSeconds(2.0f/12);
+        playerHitbox.SetActive(false);
+        playerState = PlayerState.Idle;
+    }
+
+
+    
+    bool HandleAttack()
+    {
+        if (attackAction.IsPressed())
+        {
+            StartCoroutine(Attack());
+            return true;
+        }
+        return false;
+    }
+
+
+    bool HandleJumping()
     {
         if (jumpedThisFrame && isGrounded())
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
             playerState = PlayerState.Jumping;
+            animator.SetTrigger("jump");
+            return true;
         }
+        return false;
     }
 
     void HandleExtraJumping()
@@ -71,6 +108,7 @@ public class PlayerMovement : MonoBehaviour
             currentExtraJumpCount--;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
             playerState = PlayerState.Jumping;
+            animator.ResetTrigger("jump");
         }
     }
 
@@ -81,8 +119,13 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
+
+
     void Update()
     {
+        animator.SetBool("isMoving", playerState == PlayerState.Running);
+        animator.SetBool("isFalling", playerState == PlayerState.Falling);
+
         movementInput = moveAction.ReadValue<Vector2>();
 
         switch (playerState)
@@ -95,11 +138,13 @@ public class PlayerMovement : MonoBehaviour
                 {
                     playerState = PlayerState.Falling;
                 }
-                HandleJumping();
+                if (HandleAttack()) break;
+                if (HandleJumping()) break;
                 break;
             case PlayerState.Running:
-                if (Mathf.Abs(movementInput.x) < 0.1f) { playerState = PlayerState.Idle; }
-                HandleJumping();
+                if (Mathf.Abs(movementInput.x) == 0) { playerState = PlayerState.Idle; }
+                if (HandleAttack()) break;
+                if (HandleJumping()) break;
                 break;
             case PlayerState.Jumping:
                 if (rb.linearVelocity.y <= 0) playerState = PlayerState.Falling;
@@ -114,13 +159,14 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
 
-        if (!isGrounded() && rb.linearVelocity.y < 0)
+        if (!isGrounded() && rb.linearVelocity.y < -0.1f)
         {
             playerState = PlayerState.Falling;
         }
 
         FaceMovementDir();
         jumpedThisFrame = false;
+
     }
 
 
@@ -163,4 +209,8 @@ public class PlayerMovement : MonoBehaviour
     public bool IsBlocking() => playerState == PlayerState.Blocking;
     public bool IsFacingRight() => isFacingRight;
 
+    public void Knockback(Vector2 damageDirection)
+    {
+        rb.AddForce(damageDirection * knockbackForce);
+    }
 }

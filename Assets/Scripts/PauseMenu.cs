@@ -1,15 +1,23 @@
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PauseMenu : MonoBehaviour
 {
     public GameObject container;
-    void Update()
+
+    private InputAction pauseAction;
+
+    void Start()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            container.SetActive(true);
-            Time.timeScale = 0;
-        }
+        pauseAction = InputSystem.actions.FindAction("Pause");
+        pauseAction.performed += OnPausePressed;
+    }
+
+    void OnPausePressed(InputAction.CallbackContext context)
+    {
+        container.SetActive(true);
+        Time.timeScale = 0;
     }
 
     public void ResumeButton()

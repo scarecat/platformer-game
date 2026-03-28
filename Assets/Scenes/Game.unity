@@ -571,6 +571,14 @@ PrefabInstance:
       propertyPath: extraJumpCount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8580716158218117254, guid: dc509504d10455fc29ed186e0cea3cfc, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8968979620169317069, guid: dc509504d10455fc29ed186e0cea3cfc, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -710,7 +718,7 @@ Camera:
   far clip plane: 10
   field of view: 60
   orthographic: 1
-  orthographic size: 3
+  orthographic size: 4
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2

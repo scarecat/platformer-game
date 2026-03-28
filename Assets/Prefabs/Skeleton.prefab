@@ -15,9 +15,10 @@ GameObject:
   - component: {fileID: 7161792257344105314}
   - component: {fileID: 5752135527635445024}
   - component: {fileID: 2389826795888499978}
+  - component: {fileID: 1719080569698825248}
   m_Layer: 0
   m_Name: Skeleton
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -173,7 +174,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterDamage
   damage: 10
-  playerHealth: {fileID: 0}
 --- !u!114 &5752135527635445024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,3 +213,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1719080569698825248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275414630682573112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4079a56aef5af643b89e150d032ce77b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityHealth
+  maxHealth: 4
+  currentHealth: 4
+  dieOnZeroHealth: 1
+  cooldownTime: 0.25
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  onCooldown: 0
