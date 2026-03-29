@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerState currentState;
     private bool isBlocking = false;
     private InputAction blockAction;
+    private PlayerEnergy playerEnergy;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -29,13 +30,21 @@ public class PlayerMovement : MonoBehaviour
        jumpAction = InputSystem.actions.FindAction("Jump");
        moveAction = InputSystem.actions.FindAction("Move");
        blockAction = InputSystem.actions.FindAction("Block");
+       playerEnergy = GetComponent<PlayerEnergy>();
     }
 
     void Update()
     {
         horizontal = moveAction.ReadValue<Vector2>().x;
 
-        isBlocking = blockAction.IsPressed();
+        bool blockPressed = blockAction.IsPressed();
+
+        if (blockPressed && playerEnergy != null)
+            isBlocking = playerEnergy.UseBlockEnergy(Time.deltaTime);
+        else if (blockPressed && playerEnergy == null)
+            isBlocking = true;
+        else
+            isBlocking = false;
 
         if (isBlocking)
         {
