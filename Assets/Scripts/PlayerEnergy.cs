@@ -18,7 +18,9 @@ public class PlayerEnergy : MonoBehaviour
     public float CurrentEnergy => currentEnergy;
     public float MaxEnergy => maxEnergy;
     public float EnergyPercent => currentEnergy / maxEnergy;
-    public bool HasEnergy => currentEnergy > 0f;
+
+    private bool canBlock = true;
+    public bool CanBlock => canBlock;
 
     private void Awake()
     {
@@ -32,13 +34,16 @@ public class PlayerEnergy : MonoBehaviour
             currentEnergy = Mathf.Clamp(currentEnergy + regenPerSecond * Time.deltaTime, 0f, maxEnergy);
             OnEnergyChanged?.Invoke(currentEnergy, maxEnergy);
         }
+
+        if (!canBlock && currentEnergy >= maxEnergy * 0.25f)
+            canBlock = true;
     }
 
     public bool UseBlockEnergy(float deltaTime)
     {
         if (currentEnergy <= 0f)
         {
-            currentEnergy = 0f;
+            canBlock = false;
             OnEnergyChanged?.Invoke(currentEnergy, maxEnergy);
             return false;
         }
@@ -46,6 +51,14 @@ public class PlayerEnergy : MonoBehaviour
         currentEnergy = Mathf.Clamp(currentEnergy - blockCostPerSecond * deltaTime, 0f, maxEnergy);
         OnEnergyChanged?.Invoke(currentEnergy, maxEnergy);
         return true;
+    }
+
+    public void ConsumeEnergy(float amount)
+    {
+        currentEnergy = Mathf.Clamp(currentEnergy - amount, 0f, maxEnergy);
+        if (currentEnergy <= 0f)
+            canBlock = false;
+        OnEnergyChanged?.Invoke(currentEnergy, maxEnergy);
     }
 
     public void RestoreEnergy(float amount)

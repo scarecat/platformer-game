@@ -8,9 +8,9 @@ public class EnergyBar : MonoBehaviour
     [SerializeField] private Image fillImage;
 
     [Header("Kolory paska")]
-    [SerializeField] private Color colorFull   = new Color(0.2f, 0.5f, 1.0f);  // niebieski
-    [SerializeField] private Color colorMedium = new Color(0.9f, 0.7f, 0.1f);  // żółty
-    [SerializeField] private Color colorLow    = new Color(0.9f, 0.2f, 0.2f);  // czerwony
+    [SerializeField] private Color colorFull   = new Color(0.2f, 0.5f, 1.0f);  
+    [SerializeField] private Color colorMedium = new Color(0.9f, 0.7f, 0.1f);  
+    [SerializeField] private Color colorLow    = new Color(0.9f, 0.2f, 0.2f);  
 
     [Header("Progi kolorów")]
     [SerializeField] private float mediumThreshold = 0.5f;

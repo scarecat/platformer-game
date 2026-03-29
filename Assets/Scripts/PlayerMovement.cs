@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
         bool blockPressed = blockAction.IsPressed();
 
         if (blockPressed && playerEnergy != null)
-            isBlocking = playerEnergy.UseBlockEnergy(Time.deltaTime);
+            isBlocking = playerEnergy.CanBlock && playerEnergy.UseBlockEnergy(Time.deltaTime);
         else if (blockPressed && playerEnergy == null)
             isBlocking = true;
         else

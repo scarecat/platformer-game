@@ -24,14 +24,18 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(float amount, Vector2 damageDirection)
     {
         PlayerMovement movement = GetComponent<PlayerMovement>();
+        
 
         if (movement != null && movement.IsBlocking())
         {
             float facingDir = movement.IsFacingRight() ? 1f : -1f;
             float dot = Vector2.Dot(new Vector2(facingDir, 0), damageDirection.normalized);
 
-            if (dot > 0f)
+            if (dot < 0f)
             {
+                PlayerEnergy energy = GetComponent<PlayerEnergy>();
+                if (energy != null)
+                    energy.ConsumeEnergy(25f);
                 Debug.Log("block");
                 return;
             }
