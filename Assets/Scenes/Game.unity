@@ -362,6 +362,42 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &510765147 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4374769316836784768, guid: 05eae8806291dd74fb576e8495f2f036, type: 3}
+  m_PrefabInstance: {fileID: 1712204424}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &510765150 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2016441010379812399, guid: 05eae8806291dd74fb576e8495f2f036, type: 3}
+  m_PrefabInstance: {fileID: 1712204424}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510765147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
+--- !u!114 &510765151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510765147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ea97f65cc8274cc69e884b7683ac1de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnergyBar
+  energySlider: {fileID: 510765150}
+  fillImage: {fileID: 1524093367}
+  colorFull: {r: 0.2, g: 0.5, b: 1, a: 1}
+  colorMedium: {r: 0.9, g: 0.7, b: 0.1, a: 1}
+  colorLow: {r: 0.9, g: 0.2, b: 0.2, a: 1}
+  mediumThreshold: 0.5
+  lowThreshold: 0.25
+  playerEnergy: {fileID: 0}
 --- !u!224 &513235216 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2030943649330712147, guid: 05eae8806291dd74fb576e8495f2f036, type: 3}
@@ -556,6 +592,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6747324091440938089, guid: dc509504d10455fc29ed186e0cea3cfc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 991840574}
+    - targetCorrespondingSourceObject: {fileID: 6747324091440938089, guid: dc509504d10455fc29ed186e0cea3cfc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 991840579}
   m_SourcePrefab: {fileID: 100100000, guid: dc509504d10455fc29ed186e0cea3cfc, type: 3}
 --- !u!1 &991840572 stripped
 GameObject:
@@ -586,6 +625,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &991840579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991840572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26c2fd81286614114bfda88c5028f88b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerEnergy
+  maxEnergy: 100
+  currentEnergy: 0
+  blockCostPerSecond: 25
+  regenPerSecond: 10
+  OnEnergyChanged:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1001 &1334703876
@@ -742,6 +800,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2030943649330712147, guid: 05eae8806291dd74fb576e8495f2f036, type: 3}
   m_PrefabInstance: {fileID: 1334703876}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1524093367 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6947702062251963967, guid: 05eae8806291dd74fb576e8495f2f036, type: 3}
+  m_PrefabInstance: {fileID: 1712204424}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &1704452246
 GameObject:
   m_ObjectHideFlags: 0
@@ -1023,14 +1092,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnergySlider
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3333419553695354542, guid: 05eae8806291dd74fb576e8495f2f036, type: 3}
     m_RemovedGameObjects:
     - {fileID: 9214813119870383529, guid: 05eae8806291dd74fb576e8495f2f036, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2030943649330712147, guid: 05eae8806291dd74fb576e8495f2f036, type: 3}
       insertIndex: -1
       addedObject: {fileID: 298734490}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4374769316836784768, guid: 05eae8806291dd74fb576e8495f2f036, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 510765151}
   m_SourcePrefab: {fileID: 100100000, guid: 05eae8806291dd74fb576e8495f2f036, type: 3}
 --- !u!1 &1751476766
 GameObject:
