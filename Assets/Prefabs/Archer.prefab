@@ -228,5 +228,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterShooting
   shotCooldown: 1
-  backToSearchTime: 3
+  shotCount: 1
+  projectile: {fileID: 3728749103211540357, guid: 94786391c97dc5bec861e0fb2de3ccbf, type: 3}
   visibilityRange: 5

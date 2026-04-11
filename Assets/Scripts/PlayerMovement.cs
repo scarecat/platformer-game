@@ -68,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator Attack()
     {
         playerState = PlayerState.Attacking;
+        movementInput = Vector2.zero;
         animator.SetTrigger("attack");
         yield return new WaitForSeconds(1.0f/12);
         playerHitbox.SetActive(true);
@@ -91,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool HandleJumping()
     {
-        if (jumpedThisFrame && isGrounded())
+        if (jumpedThisFrame && IsGrounded())
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
             playerState = PlayerState.Jumping;
@@ -125,6 +126,7 @@ public class PlayerMovement : MonoBehaviour
     {
         animator.SetBool("isMoving", playerState == PlayerState.Running);
         animator.SetBool("isFalling", playerState == PlayerState.Falling);
+        animator.SetBool("isGroundState", playerState == PlayerState.Idle || playerState == PlayerState.Running);
 
         movementInput = moveAction.ReadValue<Vector2>();
 
@@ -134,7 +136,7 @@ public class PlayerMovement : MonoBehaviour
                 currentExtraJumpCount = extraJumpCount;
                 if (blockAction.IsPressed()) { playerState = PlayerState.Blocking; }
                 else if (Mathf.Abs(movementInput.x) > 0.1f) { playerState = PlayerState.Running; }
-                else if (!isGrounded())
+                else if (!IsGrounded())
                 {
                     playerState = PlayerState.Falling;
                 }
@@ -151,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
                 HandleExtraJumping();
                 break;
             case PlayerState.Falling:
-                if (isGrounded()) playerState = PlayerState.Idle;
+                if (IsGrounded()) playerState = PlayerState.Idle;
                 HandleExtraJumping();
                 break;
             case PlayerState.Blocking:
@@ -159,7 +161,7 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
 
-        if (!isGrounded() && rb.linearVelocity.y < -0.1f)
+        if (!IsGrounded() && rb.linearVelocity.y < -0.1f)
         {
             playerState = PlayerState.Falling;
         }
@@ -191,7 +193,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool isGrounded()
+    private bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }

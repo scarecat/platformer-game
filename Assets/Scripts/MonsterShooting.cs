@@ -13,6 +13,9 @@ public class MonsterShooting : MonoBehaviour
 
     [SerializeField]
     private int shotCount = 1;
+    
+    [SerializeField]
+    private GameObject projectile;
 
     
     private int shotsFired = 0;
@@ -21,6 +24,8 @@ public class MonsterShooting : MonoBehaviour
     private float visibilityRange = 5f;
 
     private bool canShoot = true;
+
+    private Vector2 facingDir;
 
     enum ShootingState
     {
@@ -49,7 +54,7 @@ public class MonsterShooting : MonoBehaviour
 
     private void CheckForPlayer()
     {
-       Vector2 facingDir = monsterMovement.IsFacingLeft() ? Vector2.left : Vector2.right;
+       facingDir = monsterMovement.IsFacingLeft() ? Vector2.left : Vector2.right;
 
 
         RaycastHit2D[] hits = Physics2D.RaycastAll(new Vector2(transform.position.x, transform.position.y), facingDir, visibilityRange);
@@ -69,9 +74,11 @@ public class MonsterShooting : MonoBehaviour
 
     private IEnumerator Shoot()
     {
-        Debug.Log("Shooting!");
         canShoot = false;
         yield return new WaitForSeconds(shotCooldown);
+        var projectileObj = Instantiate(projectile,transform.position, transform.rotation);
+        var projectileComponent =  projectileObj.GetComponent<Projectile>();
+        projectileComponent.direction = facingDir;
         canShoot = true;
         shotsFired++;
     }
