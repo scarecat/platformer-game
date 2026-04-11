@@ -16,8 +16,9 @@ GameObject:
   - component: {fileID: 5752135527635445024}
   - component: {fileID: 1719080569698825248}
   - component: {fileID: 8147490024605811654}
+  - component: {fileID: 9202243902932559591}
   m_Layer: 0
-  m_Name: Archer
+  m_Name: Demon
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,7 +34,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 13.84544, y: -2.46833, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -87,8 +88,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7928858964255100155, guid: fa70ba7158fad8f43a6271c54b88e852, type: 3}
-  m_Color: {r: 0, g: 0.7420225, b: 1, a: 1}
+  m_Sprite: {fileID: 9083683855015346827, guid: b4ff4b2e92a7cd5c792a837d372f1e75, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -158,8 +159,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.01, y: 0}
-  m_Size: {x: 0.19, y: 0.32}
+  m_Offset: {x: -0.14, y: -0.1364559}
+  m_Size: {x: 0.54183996, y: 0.8958881}
   m_Direction: 0
 --- !u!114 &7161792257344105314
 MonoBehaviour:
@@ -231,3 +232,25 @@ MonoBehaviour:
   shotCount: 1
   projectile: {fileID: 3728749103211540357, guid: 94786391c97dc5bec861e0fb2de3ccbf, type: 3}
   visibilityRange: 5
+--- !u!95 &9202243902932559591
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275414630682573112}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 14cf0c89fb3cf7dd590959aa81c1607a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
