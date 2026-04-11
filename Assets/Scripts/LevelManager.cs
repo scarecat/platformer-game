@@ -6,8 +6,6 @@ public class LevelManager : MonoBehaviour
 {
   [SerializeField] private GameObject player;
 
-  [SerializeField] private string forceLevelToStartIn = null;
-  [SerializeField] private string forceEntryPointToStartIn = null;
   private string currentLevel = null;
 
   private IEnumerator StartLoadLevel(string levelName, string entryPointName)
@@ -56,13 +54,14 @@ public class LevelManager : MonoBehaviour
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
   {
-    if (!string.IsNullOrEmpty(forceLevelToStartIn))
+    
+    if (SceneManager.sceneCount < 2) // ignore if there is a scene preloaded
     {
-      LoadLevel(forceLevelToStartIn, forceEntryPointToStartIn);
+        LoadLevel("Level1", "PlayerStart");
     }
     else
     {
-      LoadLevel("Level1", "PlayerStart");
+      currentLevel = SceneManager.GetSceneAt(1).name;
     }
   }
 
