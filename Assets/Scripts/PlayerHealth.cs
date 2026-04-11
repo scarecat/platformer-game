@@ -37,7 +37,8 @@ public class PlayerHealth : EntityHealth
 
         if (currentHealth <= 0f)
         {
-            Die();
+            //Die();
+            FindAnyObjectByType<GameOverScreen>().ShowGameOverScreen();
             return;
         }
         
