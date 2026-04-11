@@ -23,6 +23,11 @@ public class GameOverScreen : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
+    public void MainMenuButton()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
+
     public void QuitButton()
     {
         #if UNITY_EDITOR

@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+
 
 public class PauseMenu : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1.0f;
         pauseAction = InputSystem.actions.FindAction("Pause");
         pauseAction.performed += OnPausePressed;
     }
@@ -24,6 +27,11 @@ public class PauseMenu : MonoBehaviour
     {
         container.SetActive(false);
         Time.timeScale = 1;
+    }
+
+    public void MainMenuButton()
+    {
+        SceneManager.LoadScene("Main Menu");
     }
 
     public void QuitButton()
