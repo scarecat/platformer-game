@@ -18,7 +18,7 @@ public class MonsterMovement : MonoBehaviour
     
     public bool IsFacingLeft()
     {
-        return transform.position.x - patrolPoints[destinationIndex].position.x < 0;
+        return patrolPoints[destinationIndex].position.x - transform.position.x < 0;
     }
 
 
