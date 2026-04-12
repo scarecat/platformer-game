@@ -15,11 +15,13 @@ public class Projectile : MonoBehaviour
     private float lifetime = 4.0f;
 
     private SpriteRenderer spriteRenderer;
+    private bool invertSpriteFlip = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        invertSpriteFlip = spriteRenderer.flipX;
         Invoke(nameof(Kill), lifetime);
     }
 
@@ -32,7 +34,7 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         transform.position = (Vector2)transform.position + (speed * Time.deltaTime * direction);
-        spriteRenderer.flipX = direction.x < 0;
+        spriteRenderer.flipX = invertSpriteFlip ? direction.x > 0 : direction.x < 0;
     }
 
     void Handle(GameObject hitObject)

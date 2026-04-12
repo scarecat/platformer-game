@@ -1,12 +1,9 @@
-using System;
 using System.Collections;
-using System.Runtime.Serialization;
-using UnityEditor.Rendering;
 using UnityEngine;
 
-
+[RequireComponent(typeof(MonsterMovement))]
+[RequireComponent(typeof(Animator))]
 public class MonsterShooting : MonoBehaviour
-
 {
     [SerializeField]
     private float shotCooldown = 0.25f;
@@ -27,6 +24,7 @@ public class MonsterShooting : MonoBehaviour
 
     private Vector2 facingDir;
 
+
     enum ShootingState
     {
         Searching,
@@ -34,6 +32,7 @@ public class MonsterShooting : MonoBehaviour
     }
 
     private MonsterMovement monsterMovement;
+    private Animator animator;
 
     private ShootingState state = ShootingState.Searching;
 
@@ -75,6 +74,8 @@ public class MonsterShooting : MonoBehaviour
     private IEnumerator Shoot()
     {
         canShoot = false;
+        animator.SetTrigger("attack");
+        
         yield return new WaitForSeconds(shotCooldown);
         var projectileObj = Instantiate(projectile,transform.position, transform.rotation);
         var projectileComponent =  projectileObj.GetComponent<Projectile>();
@@ -86,6 +87,7 @@ public class MonsterShooting : MonoBehaviour
     void Start()
     {
         monsterMovement = GetComponent<MonsterMovement>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame

@@ -175,7 +175,7 @@ Transform:
   m_GameObject: {fileID: 525269035}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.67, y: -1.82, z: 0}
+  m_LocalPosition: {x: -7, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -260,7 +260,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 275414630682573112, guid: 28e8ac05bdbe7c886b552ea54efd6b9c, type: 3}
       propertyPath: m_Name
-      value: Archer
+      value: Demon
       objectReference: {fileID: 0}
     - target: {fileID: 5752135527635445024, guid: 28e8ac05bdbe7c886b552ea54efd6b9c, type: 3}
       propertyPath: 'patrolPoints.Array.data[0]'
