@@ -584,6 +584,14 @@ PrefabInstance:
       propertyPath: extraJumpCount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7087557111428891562, guid: dc509504d10455fc29ed186e0cea3cfc, type: 3}
+      propertyPath: m_Size.y
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087557111428891562, guid: dc509504d10455fc29ed186e0cea3cfc, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 8580716158218117254, guid: dc509504d10455fc29ed186e0cea3cfc, type: 3}
       propertyPath: m_Layer
       value: 0

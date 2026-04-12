@@ -209,6 +209,7 @@ MonoBehaviour:
   currentHealth: 3
   dieOnZeroHealth: 1
   cooldownTime: 0.25
+  onHitObject: {fileID: 4453178341035513179, guid: 2abb48d039719b249a9cb8a147741889, type: 3}
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []

@@ -190,7 +190,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   moveSpeed: 1.5
-  patrolDestination: 0
+  destinationIndex: 0
+  sprite: {fileID: 0}
 --- !u!95 &2389826795888499978
 Animator:
   serializedVersion: 7
@@ -229,6 +230,7 @@ MonoBehaviour:
   currentHealth: 4
   dieOnZeroHealth: 1
   cooldownTime: 0.25
+  onHitObject: {fileID: 4453178341035513179, guid: 2abb48d039719b249a9cb8a147741889, type: 3}
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []

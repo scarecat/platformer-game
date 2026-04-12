@@ -229,6 +229,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onCooldown: 0
+  onHitObject: {fileID: 4453178341035513179, guid: 2abb48d039719b249a9cb8a147741889, type: 3}
 --- !u!1 &8580716158218117254
 GameObject:
   m_ObjectHideFlags: 0
