@@ -4,48 +4,70 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
-    private string currentLevel = null;
+  [SerializeField] private GameObject player;
 
-    private IEnumerator StartLoadLevel(string levelName, string entryPointName) {
-      player.GetComponent<PlayerHealth>().enabled = false;
-      player.GetComponent<PlayerMovement>().enabled = false;
-      player.GetComponent<SpriteRenderer>().enabled = false;
-      if (currentLevel != null) {
-        yield return SceneManager.UnloadSceneAsync(currentLevel);
-      }
-      var loadOperation = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
-      yield return loadOperation;
-      currentLevel = levelName;
-      
-      var spawnPos = GameObject.Find(entryPointName).transform;
-      player.transform.SetPositionAndRotation(spawnPos.position, Quaternion.identity);
+  private string currentLevel = null;
 
-      player.GetComponent<PlayerHealth>().enabled = true;
-      player.GetComponent<PlayerMovement>().enabled = true;
-      player.GetComponent<SpriteRenderer>().enabled = true;
-    }
-
-
-
-    public void LoadLevel(string levelName, string entryPointName = null) {
-      string spawnPointName = entryPointName ?? $"From{currentLevel}";
-      StartCoroutine(StartLoadLevel(levelName, spawnPointName));
-    }
-
-
-
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+  private IEnumerator StartLoadLevel(string levelName, string entryPointName)
+  {
+    player.GetComponent<PlayerHealth>().enabled = false;
+    player.GetComponent<PlayerMovement>().enabled = false;
+    player.GetComponent<SpriteRenderer>().enabled = false;
+    if (currentLevel != null)
     {
-      LoadLevel("Level1", "PlayerStart");
+      yield return SceneManager.UnloadSceneAsync(currentLevel);
     }
+    var loadOperation = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
+    yield return loadOperation;
+    currentLevel = levelName;
 
-    // Update is called once per frame
-    void Update()
+    var spawnPos = GameObject.Find(entryPointName).transform;
+    player.transform.SetPositionAndRotation(spawnPos.position, Quaternion.identity);
+
+    player.GetComponent<PlayerHealth>().enabled = true;
+    player.GetComponent<PlayerMovement>().enabled = true;
+    player.GetComponent<SpriteRenderer>().enabled = true;
+  }
+
+
+
+  public void LoadLevel(string levelName, string entryPointName = null)
+  {
+    string spawnPointName;
+
+    if (string.IsNullOrEmpty(entryPointName))
     {
-        
+      spawnPointName = $"From{currentLevel}";
+
     }
+    else
+    {
+      spawnPointName = entryPointName;
+    }
+    StartCoroutine(StartLoadLevel(levelName, spawnPointName));
+  }
+
+
+
+
+
+  // Start is called once before the first execution of Update after the MonoBehaviour is created
+  void Start()
+  {
+    
+    if (SceneManager.sceneCount < 2) // ignore if there is a scene preloaded
+    {
+        LoadLevel("Level1", "PlayerStart");
+    }
+    else
+    {
+      currentLevel = SceneManager.GetSceneAt(1).name;
+    }
+  }
+
+  // Update is called once per frame
+  void Update()
+  {
+
+  }
 }

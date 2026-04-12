@@ -22,12 +22,15 @@ public class PlayerHitbox : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Projectile") && other.TryGetComponent(out Projectile projectile))
         {
-           EntityHealth healthComponent = other.gameObject.GetComponent<EntityHealth>();
-           healthComponent.TakeDamage(damage);
+            projectile.Kill();
         }
-        
+        else if (other.CompareTag("Enemy") && other.TryGetComponent(out EntityHealth health))
+        {
+           health = other.gameObject.GetComponent<EntityHealth>();
+           health.TakeDamage(damage);
+        }
     }
 
 }

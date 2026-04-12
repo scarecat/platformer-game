@@ -4,28 +4,35 @@ public class MonsterMovement : MonoBehaviour
 {
     public Transform[] patrolPoints;
     public float moveSpeed;
-    public int patrolDestination;
+
+    public int destinationIndex = 0;
+
+    public SpriteRenderer sprite;
+
+
+    void Start()
+    {
+        sprite = GetComponent<SpriteRenderer>();
+    }
+
+    
+    public bool IsFacingLeft()
+    {
+        return patrolPoints[destinationIndex].position.x - transform.position.x < 0;
+    }
+
 
     void Update()
     {
-        if(patrolDestination == 0)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, patrolPoints[0].position, moveSpeed * Time.deltaTime);
-            if (Vector2.Distance(transform.position, patrolPoints[0].position) <= 0.2f)
-            {
-                transform.localScale = new Vector3(3, 3, 1);
-                patrolDestination = 1;
-            }
-        }
 
-        if (patrolDestination == 1)
+        transform.position = Vector2.MoveTowards(transform.position, patrolPoints[destinationIndex].position, moveSpeed * Time.deltaTime);
+        sprite.flipX = IsFacingLeft();
+
+        if (Vector2.Distance(transform.position, patrolPoints[destinationIndex].position) <= 0.2f)
         {
-            transform.position = Vector2.MoveTowards(transform.position, patrolPoints[1].position, moveSpeed * Time.deltaTime);
-            if (Vector2.Distance(transform.position, patrolPoints[1].position) <= 0.2f)
-            {
-                transform.localScale = new Vector3(-3, 3, 1);
-                patrolDestination = 0;
-            }
+            destinationIndex = (destinationIndex + 1) % patrolPoints.Length;
         }
+        
+
     }
 }

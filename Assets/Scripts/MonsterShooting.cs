@@ -1,0 +1,118 @@
+using System.Collections;
+using UnityEngine;
+
+[RequireComponent(typeof(MonsterMovement))]
+[RequireComponent(typeof(Animator))]
+public class MonsterShooting : MonoBehaviour
+{
+    [SerializeField]
+    private float shotCooldown = 0.25f;
+
+    [SerializeField]
+    private int shotCount = 1;
+    
+    [SerializeField]
+    private GameObject projectile;
+
+    
+    private int shotsFired = 0;
+
+    [SerializeField]
+    private float visibilityRange = 5f;
+
+    private bool canShoot = true;
+
+    private Vector2 facingDir;
+
+
+    enum ShootingState
+    {
+        Searching,
+        Shooting
+    }
+
+    private MonsterMovement monsterMovement;
+    private Animator animator;
+
+    private ShootingState state = ShootingState.Searching;
+
+    private void FoundTarget()
+    {
+        monsterMovement.enabled = false;
+        state = ShootingState.Shooting;
+    }
+
+    private void BackToSearch()
+    {
+        state = ShootingState.Searching;
+        monsterMovement.enabled = true;
+        target = null;
+    }
+
+    private Transform target;
+
+    private void CheckForPlayer()
+    {
+       facingDir = monsterMovement.IsFacingLeft() ? Vector2.left : Vector2.right;
+
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(new Vector2(transform.position.x, transform.position.y), facingDir, visibilityRange);
+        Debug.DrawRay(transform.position, facingDir * visibilityRange, Color.magenta);
+        for (int i = 0; i < hits.Length; i++)
+        {
+            var obj = hits[i].transform;
+            if (obj.CompareTag("Player"))
+            {
+                target = obj;
+                FoundTarget();
+                break;
+            }
+        }
+
+    }
+
+    private IEnumerator Shoot()
+    {
+        canShoot = false;
+        animator.SetTrigger("attack");
+        
+        yield return new WaitForSeconds(shotCooldown);
+        var projectileObj = Instantiate(projectile,transform.position, transform.rotation);
+        var projectileComponent =  projectileObj.GetComponent<Projectile>();
+        projectileComponent.direction = facingDir;
+        canShoot = true;
+        shotsFired++;
+    }
+
+    void Start()
+    {
+        monsterMovement = GetComponent<MonsterMovement>();
+        animator = GetComponent<Animator>();
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        switch (state)
+        {
+            case ShootingState.Searching:
+                CheckForPlayer();
+                break;
+            case ShootingState.Shooting:
+                if (shotsFired >= shotCount)
+                {
+                    shotsFired = 0;
+                    BackToSearch();
+                    break;
+                }
+
+                if (canShoot)
+                {
+                    StartCoroutine(Shoot());
+                }
+                break;
+        }
+    }
+
+
+}
