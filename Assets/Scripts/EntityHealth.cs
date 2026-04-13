@@ -37,7 +37,7 @@ public class EntityHealth : MonoBehaviour
       spriteRenderer.color = Color.white;
     }
 
-    void Start() {
+    virtual protected void Start() {
       spriteRenderer = GetComponent<SpriteRenderer>();
     }
 

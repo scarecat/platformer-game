@@ -3,8 +3,18 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(PlayerEnergy))]
 public class PlayerHealth : EntityHealth
 {
+    PlayerEnergy playerEnergy;
+
+    protected override void Start()
+    {
+        base.Start();
+        playerEnergy = GetComponent<PlayerEnergy>();
+
+    }
+
     protected override void SpawnOnHitObject() {
       Instantiate(onHitObject, transform.position + Vector3.up * 0.5f, transform.rotation);
     }
@@ -24,10 +34,7 @@ public class PlayerHealth : EntityHealth
 
             if (dot < 0f)
             {
-                PlayerEnergy energy = GetComponent<PlayerEnergy>();
-                if (energy != null)
-                    energy.ConsumeEnergy(25f);
-                Debug.Log("block");
+                playerEnergy.ConsumeEnergy(25f);
                 return false;
             }
         }

@@ -47,8 +47,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float knockbackForce = 10.0f;
     
-    private bool isBlocking = false;
-
+    public bool IsBlocking() => playerState == PlayerState.Blocking;
+    public bool IsFacingRight() => isFacingRight;
 
     private void Start()
     {
@@ -71,9 +71,16 @@ public class PlayerMovement : MonoBehaviour
        blockAction = InputSystem.actions.FindAction("Block");
        playerEnergy = GetComponent<PlayerEnergy>();
     }
+    
+    private void StopVelocity()
+    {
+        rb.linearVelocity = Vector2.zero;
+        movementInput = Vector2.zero;
+    }
 
     private IEnumerator Attack()
     {
+        StopVelocity();
         playerState = PlayerState.Attacking;
         movementInput = Vector2.zero;
         animator.SetTrigger("attack");
@@ -95,6 +102,12 @@ public class PlayerMovement : MonoBehaviour
         }
         return false;
     }
+    
+    void HandleBlocking()
+    {
+        playerEnergy.UseBlockEnergy();
+        if (!blockAction.IsPressed()) { playerState = PlayerState.Idle; }
+    }
 
 
     bool HandleJumping()
@@ -109,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
-    void HandleExtraJumping()
+    bool TryExtraJump()
     {
         if (jumpedThisFrame && currentExtraJumpCount > 0)
         {
@@ -117,7 +130,9 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
             playerState = PlayerState.Jumping;
             animator.ResetTrigger("jump");
+            return true;
         }
+        return false;
     }
 
 
@@ -126,50 +141,39 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = new Vector2(movementInput.x * speed, rb.linearVelocity.y);
     }
 
-
-
-
     void Update()
     {
         animator.SetBool("isMoving", playerState == PlayerState.Running);
         animator.SetBool("isFalling", playerState == PlayerState.Falling);
+        animator.SetBool("isBlocking", playerState == PlayerState.Blocking);
         animator.SetBool("isGroundState", playerState == PlayerState.Idle || playerState == PlayerState.Running);
 
         movementInput = moveAction.ReadValue<Vector2>();
-        bool blockPressed = blockAction.IsPressed();
 
-        if (blockPressed && playerEnergy != null)
-            isBlocking = playerEnergy.CanBlock && playerEnergy.UseBlockEnergy(Time.deltaTime);
-        else if (blockPressed && playerEnergy == null)
-            isBlocking = true;
-        else
-            isBlocking = false;
 
         switch (playerState)
         {
             case PlayerState.Idle:
                 currentExtraJumpCount = extraJumpCount;
-                if (blockAction.IsPressed()) { playerState = PlayerState.Blocking; }
-                else if (Mathf.Abs(movementInput.x) > 0.1f) { playerState = PlayerState.Running; }
-                else if (!IsGrounded())
-                {
-                    playerState = PlayerState.Falling;
-                }
+                if (TryBlock()) break;
+                if (Mathf.Abs(movementInput.x) > 0.1f) { playerState = PlayerState.Running;  break;}
+                else if (!IsGrounded()) { playerState = PlayerState.Falling; break; }
                 if (HandleAttack()) break;
                 if (HandleJumping()) break;
                 break;
             case PlayerState.Running:
-                if (Mathf.Abs(movementInput.x) == 0) { playerState = PlayerState.Idle; }
+                if (TryBlock()) break;
+                if (Mathf.Abs(movementInput.x) == 0) { playerState = PlayerState.Idle; break; }
                 if (HandleAttack()) break;
                 if (HandleJumping()) break;
                 break;
             case PlayerState.Jumping:
                 if (rb.linearVelocity.y <= 0) playerState = PlayerState.Falling;
-                HandleExtraJumping();
+                if (TryExtraJump()) break;
                 break;
             case PlayerState.Falling:
                 if (IsGrounded()) playerState = PlayerState.Idle;
-                HandleExtraJumping();
+                if (TryExtraJump()) break;
                 break;
             case PlayerState.Blocking:
                 FaceMovementDir();
@@ -186,6 +190,15 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    private bool TryBlock()
+    {
+        if (blockAction.IsPressed()) {
+            StopVelocity();
+            playerState = PlayerState.Blocking;
+            return true;
+        }
+        return false;
+    }
 
     private void FixedUpdate()
     {
@@ -204,6 +217,7 @@ public class PlayerMovement : MonoBehaviour
                 HandleRunning();
                 break;
             case PlayerState.Blocking:
+                HandleBlocking();
                 break;
         }
     }
@@ -223,8 +237,6 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = localScale;
         }
     }
-    public bool IsBlocking() => playerState == PlayerState.Blocking;
-    public bool IsFacingRight() => isFacingRight;
 
     public void Knockback(Vector2 damageDirection)
     {
