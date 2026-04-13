@@ -10,9 +10,7 @@ public class LevelManager : MonoBehaviour
 
   private IEnumerator StartLoadLevel(string levelName, string entryPointName)
   {
-    player.GetComponent<PlayerHealth>().enabled = false;
-    player.GetComponent<PlayerMovement>().enabled = false;
-    player.GetComponent<SpriteRenderer>().enabled = false;
+    player.SetActive(false);
     if (currentLevel != null)
     {
       yield return SceneManager.UnloadSceneAsync(currentLevel);
@@ -23,10 +21,7 @@ public class LevelManager : MonoBehaviour
 
     var spawnPos = GameObject.Find(entryPointName).transform;
     player.transform.SetPositionAndRotation(spawnPos.position, Quaternion.identity);
-
-    player.GetComponent<PlayerHealth>().enabled = true;
-    player.GetComponent<PlayerMovement>().enabled = true;
-    player.GetComponent<SpriteRenderer>().enabled = true;
+    player.SetActive(true);
   }
 
 
