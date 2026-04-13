@@ -40,11 +40,14 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 movementInput;
     public PlayerState playerState;
     private bool jumpedThisFrame = false;
+    private PlayerEnergy playerEnergy;
 
     [SerializeField] private Transform groundCheck;
     //[SerializeField] private Transform respawnPoint;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float knockbackForce = 10.0f;
+    
+    private bool isBlocking = false;
 
 
     private void Start()
@@ -63,6 +66,10 @@ public class PlayerMovement : MonoBehaviour
         currentExtraJumpCount = extraJumpCount;
 
         animator = GetComponent<Animator>();
+       jumpAction = InputSystem.actions.FindAction("Jump");
+       moveAction = InputSystem.actions.FindAction("Move");
+       blockAction = InputSystem.actions.FindAction("Block");
+       playerEnergy = GetComponent<PlayerEnergy>();
     }
 
     private IEnumerator Attack()
@@ -129,6 +136,14 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("isGroundState", playerState == PlayerState.Idle || playerState == PlayerState.Running);
 
         movementInput = moveAction.ReadValue<Vector2>();
+        bool blockPressed = blockAction.IsPressed();
+
+        if (blockPressed && playerEnergy != null)
+            isBlocking = playerEnergy.CanBlock && playerEnergy.UseBlockEnergy(Time.deltaTime);
+        else if (blockPressed && playerEnergy == null)
+            isBlocking = true;
+        else
+            isBlocking = false;
 
         switch (playerState)
         {

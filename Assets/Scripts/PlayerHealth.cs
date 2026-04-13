@@ -22,8 +22,11 @@ public class PlayerHealth : EntityHealth
             float facingDir = player.IsFacingRight() ? 1f : -1f;
             float dot = Vector2.Dot(new Vector2(facingDir, 0), damageDirection.normalized);
 
-            if (dot > 0f)
+            if (dot < 0f)
             {
+                PlayerEnergy energy = GetComponent<PlayerEnergy>();
+                if (energy != null)
+                    energy.ConsumeEnergy(25f);
                 Debug.Log("block");
                 return false;
             }
