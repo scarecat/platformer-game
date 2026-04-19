@@ -26,11 +26,8 @@ public class LevelManager : MonoBehaviour
     {
       yield return SceneManager.UnloadSceneAsync(currentLevel);
     }
+
     var loadOperation = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
-    
-    
-
-
     yield return loadOperation;
     var confinementObject = GameObject.FindWithTag("CinemachineConfinement");
     cinemachineConfiner2D.BoundingShape2D = confinementObject.GetComponent<Collider2D>();
