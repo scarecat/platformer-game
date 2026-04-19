@@ -1,10 +1,13 @@
 using System.Collections;
+using System.Runtime.InteropServices;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
   [SerializeField] private GameObject player;
+  [SerializeField] private CinemachineConfiner2D cinemachineConfiner2D;
 
   [Header("Fade Transition")]
   [SerializeField] private CanvasGroup fadeCanvasGroup;
@@ -24,8 +27,17 @@ public class LevelManager : MonoBehaviour
       yield return SceneManager.UnloadSceneAsync(currentLevel);
     }
     var loadOperation = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
+    
+    
+
+
     yield return loadOperation;
+    var confinementObject = GameObject.FindWithTag("CinemachineConfinement");
+    cinemachineConfiner2D.BoundingShape2D = confinementObject.GetComponent<Collider2D>();
     currentLevel = levelName;
+    
+    
+
 
     var spawnPos = GameObject.Find(entryPointName).transform;
     player.transform.SetPositionAndRotation(spawnPos.position, Quaternion.identity);
@@ -97,6 +109,7 @@ public class LevelManager : MonoBehaviour
     else
     {
       currentLevel = SceneManager.GetSceneAt(1).name;
+      cinemachineConfiner2D.BoundingShape2D = GameObject.FindWithTag("CinemachineConfinement").GetComponent<Collider2D>();
     }
   }
 
