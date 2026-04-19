@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
 {
   [SerializeField] private GameObject player;
   [SerializeField] private CinemachineConfiner2D cinemachineConfiner2D;
+  [SerializeField] private CinemachineCamera cinemachineCamera;
 
   [Header("Fade Transition")]
   [SerializeField] private CanvasGroup fadeCanvasGroup;
@@ -39,6 +40,8 @@ public class LevelManager : MonoBehaviour
     var spawnPos = GameObject.Find(entryPointName).transform;
     player.transform.SetPositionAndRotation(spawnPos.position, Quaternion.identity);
     player.SetActive(true);
+    cinemachineCamera.CancelDamping();
+
 
     yield return StartCoroutine(Fade(0f));
     isLoading = false;
