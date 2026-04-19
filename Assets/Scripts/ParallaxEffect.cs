@@ -5,18 +5,16 @@ namespace _Scripts
 {
     public class ParallaxEffect : MonoBehaviour
     {
-        private float _startingPos, //This is the starting position of the sprites.
-            _lengthOfSprite; //This is the length of the sprites.
-        public float AmountOfParallax; //This is amount of parallax scroll. 
-        public Camera MainCamera; //Reference of the camera.
+        private float _startingPos,
+            _lengthOfSprite;
+        public float AmountOfParallax;
+        public Camera MainCamera; 
 
 
 
         private void Start()
         {
-            //Getting the starting X position of sprite.
             _startingPos = transform.position.x;
-            //Getting the length of the sprites.
             _lengthOfSprite = GetComponent<SpriteRenderer>().bounds.size.x;
         }
 
