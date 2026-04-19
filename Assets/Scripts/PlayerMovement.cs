@@ -177,6 +177,7 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case PlayerState.Blocking:
                 FaceMovementDir();
+                rb.linearVelocityX = 0.0f;
                 break;
         }
 
