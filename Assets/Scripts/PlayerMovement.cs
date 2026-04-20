@@ -22,7 +22,15 @@ public class PlayerMovement : MonoBehaviour
 {
     public TMP_Text stateText;
 
-    [SerializeField] private int extraJumpCount = 1;
+    private int _extraJumpCount = 1;
+    public int ExtraJumpCount
+    {
+        set { _extraJumpCount = value; }
+        get => _extraJumpCount;
+    }
+
+
+
     private int currentExtraJumpCount;
 
     private GameObject playerHitbox;
@@ -46,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
     //[SerializeField] private Transform respawnPoint;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float knockbackForce = 10.0f;
-    
+
     public bool IsBlocking() => playerState == PlayerState.Blocking;
     public bool IsFacingRight() => isFacingRight;
 
@@ -63,15 +71,15 @@ public class PlayerMovement : MonoBehaviour
         playerHitbox = GameObject.Find("Hitbox");
         playerHitbox.SetActive(false);
 
-        currentExtraJumpCount = extraJumpCount;
+        currentExtraJumpCount = ExtraJumpCount;
 
         animator = GetComponent<Animator>();
-       jumpAction = InputSystem.actions.FindAction("Jump");
-       moveAction = InputSystem.actions.FindAction("Move");
-       blockAction = InputSystem.actions.FindAction("Block");
-       playerEnergy = GetComponent<PlayerEnergy>();
+        jumpAction = InputSystem.actions.FindAction("Jump");
+        moveAction = InputSystem.actions.FindAction("Move");
+        blockAction = InputSystem.actions.FindAction("Block");
+        playerEnergy = GetComponent<PlayerEnergy>();
     }
-    
+
     private void StopVelocity()
     {
         rb.linearVelocity = Vector2.zero;
@@ -84,15 +92,15 @@ public class PlayerMovement : MonoBehaviour
         playerState = PlayerState.Attacking;
         movementInput = Vector2.zero;
         animator.SetTrigger("attack");
-        yield return new WaitForSeconds(1.0f/12);
+        yield return new WaitForSeconds(1.0f / 12);
         playerHitbox.SetActive(true);
-        yield return new WaitForSeconds(2.0f/12);
+        yield return new WaitForSeconds(2.0f / 12);
         playerHitbox.SetActive(false);
         playerState = PlayerState.Idle;
     }
 
 
-    
+
     bool HandleAttack()
     {
         if (attackAction.IsPressed())
@@ -102,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
         }
         return false;
     }
-    
+
     void HandleBlocking()
     {
         playerEnergy.UseBlockEnergy();
@@ -154,9 +162,9 @@ public class PlayerMovement : MonoBehaviour
         switch (playerState)
         {
             case PlayerState.Idle:
-                currentExtraJumpCount = extraJumpCount;
+                currentExtraJumpCount = ExtraJumpCount;
                 if (TryBlock()) break;
-                if (Mathf.Abs(movementInput.x) > 0.1f) { playerState = PlayerState.Running;  break;}
+                if (Mathf.Abs(movementInput.x) > 0.1f) { playerState = PlayerState.Running; break; }
                 else if (!IsGrounded()) { playerState = PlayerState.Falling; break; }
                 if (HandleAttack()) break;
                 if (HandleJumping()) break;
@@ -193,7 +201,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool TryBlock()
     {
-        if (blockAction.IsPressed()) {
+        if (blockAction.IsPressed())
+        {
             StopVelocity();
             playerState = PlayerState.Blocking;
             return true;
