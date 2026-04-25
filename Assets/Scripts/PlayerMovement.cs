@@ -50,6 +50,9 @@ public class PlayerMovement : MonoBehaviour
     private bool jumpedThisFrame = false;
     private PlayerEnergy playerEnergy;
 
+    [SerializeField] private Coroutine speedCoroutine;
+    [SerializeField] private Coroutine jumpCoroutine;
+
     [SerializeField] private Transform groundCheck;
     //[SerializeField] private Transform respawnPoint;
     [SerializeField] private LayerMask groundLayer;
@@ -251,5 +254,45 @@ public class PlayerMovement : MonoBehaviour
     public void Knockback(Vector2 damageDirection)
     {
         rb.AddForce(damageDirection * knockbackForce);
+    }
+
+    public void ApplySpeedBoost(float multiplier, float duration)
+    {
+        if(speedCoroutine != null)
+        {
+            StopCoroutine(speedCoroutine);
+        }
+
+        speedCoroutine = StartCoroutine(SpeedBoost(multiplier, duration));
+    }
+
+    private IEnumerator SpeedBoost(float multiplier, float duration)
+    {
+        float originalSpeed = speed;
+        speed *= multiplier;
+
+        yield return new WaitForSeconds(duration);
+
+        speed = originalSpeed;
+    }
+
+    public void ApplyExtraJump(int extraJumps, float duration)
+    {
+        if (jumpCoroutine != null)
+        {
+            StopCoroutine(jumpCoroutine);
+        }
+
+        jumpCoroutine = StartCoroutine(ExtraJump(extraJumps, duration));
+    }
+
+    private IEnumerator ExtraJump(int extraJumps, float duration)
+    {
+        int originalExtraJumps = _extraJumpCount;
+        ExtraJumpCount = originalExtraJumps + extraJumps;
+
+        yield return new WaitForSeconds(duration);
+
+        ExtraJumpCount = originalExtraJumps;
     }
 }

@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class PlayerHealth : EntityHealth
 {
     PlayerEnergy playerEnergy;
+    public bool hasShield = false;
 
     protected override void Start()
     {
@@ -46,6 +47,14 @@ public class PlayerHealth : EntityHealth
         if (onCooldown) return false;
         if (!IsAlive) return false;
 
+        if(hasShield)
+        {
+            hasShield = false;
+
+            StartCoroutine(HandleCooldown());
+            return false;
+        }
+
         SpawnOnHitObject();
         currentHealth = Mathf.Clamp(currentHealth - amount, 0f, maxHealth);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
@@ -68,4 +77,8 @@ public class PlayerHealth : EntityHealth
         onCooldown = false;
     }
 
+    public void ActivateShield()
+    {
+        hasShield = true;
+    }
 }

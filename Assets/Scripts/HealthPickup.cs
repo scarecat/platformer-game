@@ -1,20 +1,21 @@
 using UnityEngine;
 
-public class HealthPickup : MonoBehaviour
+public class HealthPickup : Pickup
 {
     [SerializeField] private float healAmount = 25f;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    protected override bool ApplyEffect(GameObject player)
     {
-        PlayerHealth playerHealth = other.GetComponentInParent<PlayerHealth>();
+        //PlayerHealth playerHealth = player.GetComponentInParent<PlayerHealth>();
 
-        if(playerHealth != null )
+        if(player.TryGetComponent(out PlayerHealth playerHealth))
         {
             if(playerHealth.CurrentHealth < playerHealth.MaxHealth)
             {
                 playerHealth.Heal(healAmount);
-                Destroy(gameObject);
+                return true;
             }
         }
+        return false;
     }
 }
