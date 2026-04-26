@@ -403,7 +403,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1168588573}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: SpikePivot (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -481,7 +481,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1264540841}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: SpikePivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -513,7 +513,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1445382575}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: SpikePivot (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -681,6 +681,10 @@ PrefabInstance:
     - target: {fileID: 7509771097483098054, guid: aa933370d163a2149a9f07bd3ce5acaa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8054647111312182994, guid: aa933370d163a2149a9f07bd3ce5acaa, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2674,7 +2678,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1944012195}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: SpikePivot (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2706,7 +2710,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2060744436}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: MechanicalSpikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2783,6 +2787,10 @@ PrefabInstance:
     - target: {fileID: 7509771097483098054, guid: aa933370d163a2149a9f07bd3ce5acaa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8054647111312182994, guid: aa933370d163a2149a9f07bd3ce5acaa, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
