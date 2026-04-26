@@ -265,6 +265,10 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public void SetPosition(Vector3 position)
+    {
+        transform.position = position;
+    }
 
     private IEnumerator KnockbackStunCoroutine()
     {

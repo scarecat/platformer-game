@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class HealthTester : MonoBehaviour
@@ -6,7 +5,7 @@ public class HealthTester : MonoBehaviour
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private float damagePerSecond = 10f;
     [SerializeField] private bool autoDamage = false;
-    
+
     private float timer = 0f;
 
     private void Update()

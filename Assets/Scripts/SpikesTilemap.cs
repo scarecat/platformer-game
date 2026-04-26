@@ -7,8 +7,8 @@ public class SpikesTilemap : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(!collision.TryGetComponent(out EntityHealth health)) return;
+        if(!collision.TryGetComponent(out PlayerHealth health)) return;
         
-        health.TakeDamage(damage);
+        health.TrapDamage(damage);
     }
 }
