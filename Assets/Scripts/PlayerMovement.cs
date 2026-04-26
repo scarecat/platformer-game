@@ -51,8 +51,8 @@ public class PlayerMovement : MonoBehaviour
     private bool jumpedThisFrame = false;
     private PlayerEnergy playerEnergy;
 
-    [SerializeField] private Coroutine speedCoroutine;
-    [SerializeField] private Coroutine jumpCoroutine;
+    private Coroutine speedCoroutine;
+    private Coroutine jumpCoroutine;
 
     [SerializeField] private Transform groundCheck;
     //[SerializeField] private Transform respawnPoint;
