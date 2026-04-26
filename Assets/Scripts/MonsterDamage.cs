@@ -15,7 +15,10 @@ public class MonsterDamage : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Player"))
         {
-            playerHealth.TakeDamage(damage, -collision.relativeVelocity.normalized);
+
+            var dirToPlayer = collision.gameObject.transform.position - transform.position;
+
+            playerHealth.TakeDamage(damage, dirToPlayer.normalized);
         }
     }
 }
