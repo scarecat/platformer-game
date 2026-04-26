@@ -18,7 +18,7 @@ public class MonsterDamage : MonoBehaviour
 
             var dirToPlayer = collision.gameObject.transform.position - transform.position;
 
-            playerHealth.TakeDamage(damage, dirToPlayer);
+            playerHealth.TakeDamage(damage, dirToPlayer.normalized);
         }
     }
 }
