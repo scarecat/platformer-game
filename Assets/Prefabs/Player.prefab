@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 8619381701799608058}
   - component: {fileID: 897178452157901513}
   - component: {fileID: 5183072036116527221}
+  - component: {fileID: 4244563341769268963}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -284,6 +285,19 @@ MonoBehaviour:
   OnEnergyChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4244563341769268963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6747324091440938089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfac0451a25d53e4f9bbfe6f7b13d729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSafePositionRecorder
+  waitAfterDangerSeconds: 0.5
 --- !u!1 &8580716158218117254
 GameObject:
   m_ObjectHideFlags: 0

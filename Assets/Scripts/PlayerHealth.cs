@@ -4,16 +4,22 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(PlayerEnergy))]
+[RequireComponent(typeof(PlayerSafePositionRecorder))]
+[RequireComponent(typeof(PlayerMovement))] // TODO: too many dependencies
 public class PlayerHealth : EntityHealth
 {
-    PlayerEnergy playerEnergy;
+    private PlayerEnergy playerEnergy;
+    private PlayerSafePositionRecorder safe;
+    private PlayerMovement player;
+    
     public bool hasShield = false;
 
     protected override void Start()
     {
         base.Start();
         playerEnergy = GetComponent<PlayerEnergy>();
-
+        safe = GetComponent<PlayerSafePositionRecorder>();
+        player = GetComponent<PlayerMovement>();
     }
 
     protected override void SpawnOnHitObject() {
@@ -42,6 +48,14 @@ public class PlayerHealth : EntityHealth
 
         return TakeDamage(amount); 
     }
+
+    public void TrapDamage(float amount)
+    {
+        TakeDamage(amount);
+        player.SetPosition(safe.SafePosition);
+    }
+
+
     public override bool TakeDamage(float amount)
     {
         if (onCooldown) return false;
