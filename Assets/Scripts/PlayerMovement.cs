@@ -15,7 +15,8 @@ public enum PlayerState
     Jumping,
     Falling,
     Blocking,
-    Attacking
+    Attacking,
+    Knockback
 }
 
 public class PlayerMovement : MonoBehaviour
@@ -56,7 +57,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     //[SerializeField] private Transform respawnPoint;
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private float knockbackForce = 10.0f;
+    [SerializeField] private float knockbackForce = 100.0f;
+    [SerializeField] private float knockbackTimeSeconds = 1f;
 
     public bool IsBlocking() => playerState == PlayerState.Blocking;
     public bool IsFacingRight() => isFacingRight;
@@ -253,8 +255,23 @@ public class PlayerMovement : MonoBehaviour
 
     public void Knockback(Vector2 damageDirection)
     {
+        damageDirection.y += 2.0f;
+
+        playerState = PlayerState.Knockback;
+        StopVelocity();
         rb.AddForce(damageDirection * knockbackForce);
+
+        StartCoroutine(KnockbackStunCoroutine());
+
     }
+
+
+    private IEnumerator KnockbackStunCoroutine()
+    {
+        yield return new WaitForSeconds(knockbackTimeSeconds);
+        playerState = PlayerState.Falling;
+    }
+
 
     public void ApplySpeedBoost(float multiplier, float duration)
     {

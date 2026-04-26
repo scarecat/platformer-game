@@ -179,7 +179,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  knockbackForce: 10
+  knockbackForce: 100
+  knockbackTimeSeconds: 0.5
 --- !u!70 &7087557111428891562
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
