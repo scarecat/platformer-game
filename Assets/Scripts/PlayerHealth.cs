@@ -31,7 +31,7 @@ public class PlayerHealth : EntityHealth
         if (onCooldown) return false;
 
         PlayerMovement player = GetComponent<PlayerMovement>();
-        player.Knockback(damageDirection);
+        
 
 
         if (player != null && player.playerState == PlayerState.Blocking)
@@ -45,7 +45,8 @@ public class PlayerHealth : EntityHealth
                 return false;
             }
         }
-
+        player.Knockback(damageDirection);
+        
         return TakeDamage(amount); 
     }
 
