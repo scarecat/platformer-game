@@ -3,6 +3,7 @@ using UnityEngine;
 public class HealthPickup : Pickup
 {
     [SerializeField] private float healAmount = 25f;
+    public AudioClip healPickup;
 
     protected override bool ApplyEffect(GameObject player)
     {
@@ -12,6 +13,7 @@ public class HealthPickup : Pickup
         {
             if(playerHealth.CurrentHealth < playerHealth.MaxHealth)
             {
+                AudioManager.Instance.PlaySFX(healPickup);
                 playerHealth.Heal(healAmount);
                 return true;
             }

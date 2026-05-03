@@ -8,6 +8,10 @@ public class PauseMenu : MonoBehaviour
 {
     public GameObject container;
 
+    [Header("D¿wiêki")]
+    public AudioClip pauseSound;
+    public AudioClip clickSound;
+
     private InputAction pauseAction;
 
     void Start()
@@ -19,18 +23,21 @@ public class PauseMenu : MonoBehaviour
 
     void OnPausePressed(InputAction.CallbackContext context)
     {
+        AudioManager.Instance.PlaySFX(pauseSound);
         container.SetActive(true);
         Time.timeScale = 0;
     }
 
     public void ResumeButton()
     {
+        AudioManager.Instance.PlaySFX(clickSound);
         container.SetActive(false);
         Time.timeScale = 1;
     }
 
     public void MainMenuButton()
     {
+        AudioManager.Instance.PlaySFX(clickSound);
         SceneManager.LoadScene("Main Menu");
     }
 

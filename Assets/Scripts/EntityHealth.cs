@@ -9,6 +9,8 @@ public class EntityHealth : MonoBehaviour
     [SerializeField] protected bool dieOnZeroHealth = true;
     [SerializeField] public float cooldownTime = 0.25f;
     [SerializeField] public GameObject onHitObject;
+    [SerializeField] public AudioClip deathSound;
+    [SerializeField] public AudioClip hitSound;
 
     public UnityEvent<float, float> OnHealthChanged;
     public UnityEvent OnDeath;
@@ -54,10 +56,14 @@ public class EntityHealth : MonoBehaviour
 
         currentHealth = Mathf.Clamp(currentHealth - amount, 0f, maxHealth);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
+
+        AudioManager.Instance.PlaySFX(hitSound);
+
         SpawnOnHitObject();
         StartCoroutine(ColorHurtSprite());
         if (currentHealth <= 0f)
         {
+            AudioManager.Instance.PlaySFX(deathSound);
             Die();
             return true;
         }
