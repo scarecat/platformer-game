@@ -84,6 +84,9 @@ public class PlayerMovement : MonoBehaviour
         blockAction = InputSystem.actions.FindAction("Block");
         playerEnergy = GetComponent<PlayerEnergy>();
     }
+    
+    public Vector2 Velocity => rb.linearVelocity;
+
 
     private void StopVelocity()
     {

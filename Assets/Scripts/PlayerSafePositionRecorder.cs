@@ -27,8 +27,8 @@ public class PlayerSafePositionRecorder : MonoBehaviour
     {
         if (dangerLock) return;
 
-        if (playerMovement.playerState == PlayerState.Idle
-            || playerMovement.playerState == PlayerState.Running)
+        if ((playerMovement.playerState == PlayerState.Idle
+            || playerMovement.playerState == PlayerState.Running) && Mathf.Abs(playerMovement.Velocity.y) < 0.05f)
         {
             safePosition = playerMovement.transform.position;
         }
