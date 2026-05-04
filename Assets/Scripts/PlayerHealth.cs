@@ -33,6 +33,7 @@ public class PlayerHealth : EntityHealth
         PlayerMovement player = GetComponent<PlayerMovement>();
         
 
+        var blocked = false;
 
         if (player != null && player.playerState == PlayerState.Blocking)
         {
@@ -42,12 +43,23 @@ public class PlayerHealth : EntityHealth
             if (dot < 0f)
             {
                 playerEnergy.ConsumeEnergy(25f);
-                return false;
+                if (playerEnergy.CanBlock)
+                {
+                    blocked = true;
+                }
             }
         }
-        player.Knockback(damageDirection);
-        
-        return TakeDamage(amount); 
+
+        if (blocked)
+        {
+            return false;
+        }
+        else
+        {
+            player.Knockback(damageDirection);
+            return TakeDamage(amount); 
+        }
+
     }
 
     public void TrapDamage(float amount)

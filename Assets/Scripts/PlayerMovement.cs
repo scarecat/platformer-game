@@ -209,7 +209,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool TryBlock()
     {
-        if (blockAction.IsPressed())
+        if (blockAction.IsPressed() && playerEnergy.CanBlock)
         {
             StopVelocity();
             playerState = PlayerState.Blocking;
