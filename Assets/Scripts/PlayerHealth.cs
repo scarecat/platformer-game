@@ -108,4 +108,12 @@ public class PlayerHealth : EntityHealth
     {
         hasShield = true;
     }
+
+    public void IncreaseMaxHealth(float amount)
+    {
+        maxHealth += amount;
+        currentHealth += amount;
+
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+    }
 }

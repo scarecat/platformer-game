@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 897178452157901513}
   - component: {fileID: 5183072036116527221}
   - component: {fileID: 4244563341769268963}
+  - component: {fileID: 7805529744438317111}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -173,7 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   stateText: {fileID: 0}
-  speed: 5
+  baseSpeed: 8
   jumpingPower: 12
   playerState: 1
   groundCheck: {fileID: 4850114038179144462}
@@ -258,6 +259,8 @@ MonoBehaviour:
   dieOnZeroHealth: 1
   cooldownTime: 0.5
   onHitObject: {fileID: 4453178341035513179, guid: 2abb48d039719b249a9cb8a147741889, type: 3}
+  deathSound: {fileID: 0}
+  hitSound: {fileID: 0}
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -298,6 +301,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSafePositionRecorder
   waitAfterDangerSeconds: 0.5
+--- !u!114 &7805529744438317111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6747324091440938089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d513f9f796161b46b480c03f6afb93f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerUpgrades
+  totalExtraJumps: 0
+  totalBonusHealth: 0
 --- !u!1 &8580716158218117254
 GameObject:
   m_ObjectHideFlags: 0
