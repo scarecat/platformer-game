@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Data.Common;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -10,6 +12,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private CinemachineConfiner2D cinemachineConfiner2D;
     [SerializeField] private CinemachineCamera cinemachineCamera;
+    [SerializeField] private bool newGame = false;
 
     [Header("Fade Transition")]
     [SerializeField] private CanvasGroup fadeCanvasGroup;
@@ -21,6 +24,8 @@ public class LevelManager : MonoBehaviour
     public string EntryPoint => currentEntryPoint;
     private bool isLoading = false;
     
+    private List<string> killedPersistentEnemyIds;
+    public List<string> KilledPersistentEnemyIds => killedPersistentEnemyIds;
 
     SaveData currentSaveData;
 
@@ -108,13 +113,22 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         
-        var maxHealth = GameObject.Find("Player").GetComponent<PlayerHealth>().MaxHealth;
+        var playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
 
-        currentSaveData = SaveSystem.LoadGame() ?? new SaveData {
-            currentLevel = "Level1",
-            entryPoint = "PlayerStart",
-            playerHealth = maxHealth
-        };
+
+        currentSaveData = SaveSystem.LoadGame();
+        if(currentSaveData == null || newGame) {
+            currentSaveData = new SaveData {
+                currentLevel = "Level1",
+                entryPoint = "PlayerStart",
+                playerHealth = playerHealth.MaxHealth,
+                killedPersistentEnemyIds = new string[0],
+            };
+        }
+
+        playerHealth.SetHealth(currentSaveData.playerHealth);
+        killedPersistentEnemyIds = currentSaveData.killedPersistentEnemyIds.ToList();
+         
 
         if (fadeCanvasGroup != null)
         {

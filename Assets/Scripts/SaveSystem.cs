@@ -15,7 +15,8 @@ public class SaveSystem
             {
                 playerHealth = playerHealth.CurrentHealth,
                 currentLevel = levelManager.Level,
-                entryPoint = levelManager.EntryPoint
+                entryPoint = levelManager.EntryPoint,
+                killedPersistentEnemyIds = levelManager.KilledPersistentEnemyIds.ToArray()
             };
 
             BinaryFormatter formatter = new BinaryFormatter();
