@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerMovement))]
 public class PlayerSafePositionRecorder : MonoBehaviour
 {
 
@@ -13,24 +12,36 @@ public class PlayerSafePositionRecorder : MonoBehaviour
 
     private Vector3 safePosition;
     public Vector3 SafePosition => safePosition;
+    [SerializeField] private Transform[] safetyCheckTransforms;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playerMovement = GetComponent<PlayerMovement>();
     }
 
+    private bool IsSafe()
+    {
+        bool safe = true;
+
+        foreach (var tform in safetyCheckTransforms)
+        {
+            Collider2D col = Physics2D.OverlapCircle(tform.position, 0.1f, layerMask: LayerMask.GetMask("Ground"));
+            if (!col || col.CompareTag("Danger"))
+            {
+                safe = false;
+            }
+        }
+        return safe;
+    }
 
 
     // Update is called once per frame
     void Update()
     {
         if (dangerLock) return;
-
-        if ((playerMovement.playerState == PlayerState.Idle
-            || playerMovement.playerState == PlayerState.Running) && Mathf.Abs(playerMovement.Velocity.y) < 0.05f)
+        if (IsSafe())
         {
-            safePosition = playerMovement.transform.position;
+            safePosition = transform.position;
         }
         else
         {
