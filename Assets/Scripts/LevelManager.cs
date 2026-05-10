@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Data.Common;
 using System.Runtime.InteropServices;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -13,9 +14,15 @@ public class LevelManager : MonoBehaviour
     [Header("Fade Transition")]
     [SerializeField] private CanvasGroup fadeCanvasGroup;
     [SerializeField] private float fadeDuration = 0.5f;
-
+    
     private string currentLevel = null;
+    private string currentEntryPoint = null;
+    public string Level => currentLevel;
+    public string EntryPoint => currentEntryPoint;
     private bool isLoading = false;
+    
+
+    SaveData currentSaveData;
 
     private IEnumerator LoadLevelCoroutine(string levelName, string entryPointName)
     {
@@ -32,10 +39,12 @@ public class LevelManager : MonoBehaviour
         yield return loadOperation;
         var confinementObject = GameObject.FindWithTag("CinemachineConfinement");
         cinemachineConfiner2D.BoundingShape2D = confinementObject.GetComponent<Collider2D>();
+
+
         currentLevel = levelName;
-
-
-
+        currentEntryPoint = entryPointName;
+        
+        SaveSystem.SaveGame(player.GetComponent<PlayerHealth>(), this);
 
         var spawnPos = GameObject.Find(entryPointName).transform;
 
@@ -98,6 +107,15 @@ public class LevelManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        
+        var maxHealth = GameObject.Find("Player").GetComponent<PlayerHealth>().MaxHealth;
+
+        currentSaveData = SaveSystem.LoadGame() ?? new SaveData {
+            currentLevel = "Level1",
+            entryPoint = "PlayerStart",
+            playerHealth = maxHealth
+        };
+
         if (fadeCanvasGroup != null)
         {
             fadeCanvasGroup.alpha = 1f;
@@ -106,7 +124,7 @@ public class LevelManager : MonoBehaviour
 
         if (SceneManager.sceneCount < 2) // ignore if there is a scene preloaded
         {
-            LoadLevel("Level1", "PlayerStart");
+            LoadLevel(currentSaveData.currentLevel, currentSaveData.entryPoint);
         }
         else
         {
