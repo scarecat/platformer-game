@@ -36,7 +36,8 @@ public class PlayerMovement : MonoBehaviour
 
     private GameObject playerHitbox;
 
-    [SerializeField] private float speed = 8f;
+    [SerializeField] public float baseSpeed = 8f;
+    private float speedMultiplier = 1f;
     [SerializeField] private float jumpingPower = 16f;
     //private float fallLimit = -10f;
     private bool isFacingRight = true;
@@ -154,7 +155,8 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleRunning()
     {
-        rb.linearVelocity = new Vector2(movementInput.x * speed, rb.linearVelocity.y);
+        float currentSpeed = baseSpeed * speedMultiplier;
+        rb.linearVelocity = new Vector2(movementInput.x * currentSpeed, rb.linearVelocity.y);
     }
 
     void Update()
@@ -292,12 +294,9 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator SpeedBoost(float multiplier, float duration)
     {
-        float originalSpeed = speed;
-        speed *= multiplier;
-
+        speedMultiplier = multiplier;
         yield return new WaitForSeconds(duration);
-
-        speed = originalSpeed;
+        speedMultiplier = 1f;
     }
 
     public void ApplyExtraJump(int extraJumps, float duration)
@@ -318,5 +317,16 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(duration);
 
         ExtraJumpCount = originalExtraJumps;
+    }
+
+    public void AddPermanentSpeed(float amount)
+    {
+        baseSpeed += amount;
+    }
+
+    public void AddPermanentExtraJump(int amount)
+    {
+        ExtraJumpCount += amount;
+        currentExtraJumpCount += amount;
     }
 }

@@ -138,6 +138,7 @@ GameObject:
   - component: {fileID: 897178452157901513}
   - component: {fileID: 5183072036116527221}
   - component: {fileID: 4244563341769268963}
+  - component: {fileID: 7805529744438317111}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -205,7 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   stateText: {fileID: 0}
-  speed: 5
+  baseSpeed: 8
   jumpingPower: 12
   playerState: 1
   groundCheck: {fileID: 4850114038179144462}
