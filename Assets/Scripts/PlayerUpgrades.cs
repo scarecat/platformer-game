@@ -7,8 +7,8 @@ public class PlayerUpgrades : MonoBehaviour
     private PlayerHealth playerHealth;
 
     [Header("Current Upgrades")]
-    public int totalExtraJumps = 0;
-    public float totalExtraHealth = 0f;
+    public int totalExtraJumpUpgrades = 0;
+    public float totalExtraHealthAmount = 0f;
 
     private void Awake()
     {
@@ -16,52 +16,15 @@ public class PlayerUpgrades : MonoBehaviour
         playerHealth = GetComponent<PlayerHealth>();
     }
 
-    void Start()
-    {
-        LoadUpgrades();
-    }
-
     public void UnlockExtraJump(int amount)
     {
-        totalExtraJumps += amount;
-        playerMovement.AddPermanentExtraJump(amount);
-        SaveUpgrades();
+        totalExtraJumpUpgrades += amount;
+        playerMovement.AddExtraJumps(amount);
     }
 
     public void UnlockMaxHealth(float amount)
     {
-        totalExtraHealth += amount;
+        totalExtraHealthAmount += amount;
         playerHealth.IncreaseMaxHealth(amount);
-        SaveUpgrades();
-    }
-
-    private void SaveUpgrades()
-    {
-        PlayerPrefs.SetInt("Perm_ExtraJumps", totalExtraJumps);
-        PlayerPrefs.SetFloat("Perm_BonusHealth", totalExtraHealth);
-        PlayerPrefs.Save();
-    }
-
-    private void LoadUpgrades()
-    {
-        totalExtraJumps = PlayerPrefs.GetInt("Perm_ExtraJumps", 0);
-        if(totalExtraJumps > 0)
-        {
-            playerMovement.AddPermanentExtraJump(totalExtraJumps);
-        }
-
-        totalExtraHealth = PlayerPrefs.GetFloat("Perm_BonusHealth", 0);
-        if(totalExtraHealth > 0)
-        {
-            playerHealth.IncreaseMaxHealth(totalExtraHealth);
-        }
-    }
-
-    [ContextMenu("Reset Upgrades")]
-    public void ResetUpgrades()
-    {
-        PlayerPrefs.DeleteKey("Perm_ExtraJumps");
-        PlayerPrefs.DeleteKey("Perm_BonusHealth");
-        PlayerPrefs.DeleteKey("ExtraJump");
     }
 }

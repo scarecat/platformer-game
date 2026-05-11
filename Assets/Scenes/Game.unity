@@ -2215,7 +2215,7 @@ MonoBehaviour:
   player: {fileID: 991840572}
   cinemachineConfiner2D: {fileID: 1515899015}
   cinemachineCamera: {fileID: 1515899013}
-  newGame: 1
+  newGame: 0
   fadeCanvasGroup: {fileID: 410374488}
   fadeDuration: 0.5
 --- !u!4 &1751476768

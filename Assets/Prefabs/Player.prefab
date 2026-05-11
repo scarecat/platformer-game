@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 897178452157901513}
   - component: {fileID: 5183072036116527221}
   - component: {fileID: 4244563341769268963}
-  - component: {fileID: 7805529744438317111}
+  - component: {fileID: 3607347414191310635}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -336,6 +336,20 @@ MonoBehaviour:
   safetyCheckTransforms:
   - {fileID: 6747201740256616424}
   - {fileID: 1610108552695520092}
+--- !u!114 &3607347414191310635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6747324091440938089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d513f9f796161b46b480c03f6afb93f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerUpgrades
+  totalExtraJumpUpgrades: 0
+  totalExtraHealthAmount: 0
 --- !u!1 &7496341515593010547
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Unity.Cinemachine;
+using UnityEditor.Networking.PlayerConnection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,9 +26,9 @@ public class LevelManager : MonoBehaviour
     private bool isLoading = false;
     
     private List<string> killedPersistentEnemyIds;
+    private List<string> pickedUpPersistentItemIds;
     public List<string> KilledPersistentEnemyIds => killedPersistentEnemyIds;
-
-    SaveData currentSaveData;
+    public List<string> PickedUpPersistentItemIds => pickedUpPersistentItemIds;
 
     private IEnumerator LoadLevelCoroutine(string levelName, string entryPointName)
     {
@@ -49,7 +50,7 @@ public class LevelManager : MonoBehaviour
         currentLevel = levelName;
         currentEntryPoint = entryPointName;
         
-        SaveSystem.SaveGame(player.GetComponent<PlayerHealth>(), this);
+        SaveSystem.SaveGame(player.GetComponent<PlayerHealth>(), player.GetComponent<PlayerUpgrades>(), this);
 
         var spawnPos = GameObject.Find(entryPointName).transform;
 
@@ -113,21 +114,30 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         
-        var playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
+        var player = GameObject.Find("Player");
+        var playerHealth = player.GetComponent<PlayerHealth>();
+        var playerUpgrades = player.GetComponent<PlayerUpgrades>();
 
 
-        currentSaveData = SaveSystem.LoadGame();
+        var currentSaveData = SaveSystem.LoadGame();
         if(currentSaveData == null || newGame) {
             currentSaveData = new SaveData {
                 currentLevel = "Level1",
                 entryPoint = "PlayerStart",
                 playerHealth = playerHealth.MaxHealth,
                 killedPersistentEnemyIds = new string[0],
+                pickedUpPersistentItemIds = new string[0],
+                totalExtraHealthAmount = 0,
+                totalExtraJumpUpgrades = 0,
             };
         }
 
         playerHealth.SetHealth(currentSaveData.playerHealth);
+        playerUpgrades.UnlockExtraJump(currentSaveData.totalExtraJumpUpgrades);
+        playerUpgrades.UnlockMaxHealth(currentSaveData.totalExtraHealthAmount);
+
         killedPersistentEnemyIds = currentSaveData.killedPersistentEnemyIds.ToList();
+        pickedUpPersistentItemIds = currentSaveData.pickedUpPersistentItemIds.ToList();
          
 
         if (fadeCanvasGroup != null)

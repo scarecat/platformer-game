@@ -8,6 +8,7 @@ TagManager:
   - Projectile
   - CinemachineConfinement
   - Audio
+  - Danger
   layers:
   - Default
   - TransparentFX

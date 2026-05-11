@@ -324,7 +324,7 @@ public class PlayerMovement : MonoBehaviour
         baseSpeed += amount;
     }
 
-    public void AddPermanentExtraJump(int amount)
+    public void AddExtraJumps(int amount)
     {
         ExtraJumpCount += amount;
         currentExtraJumpCount += amount;

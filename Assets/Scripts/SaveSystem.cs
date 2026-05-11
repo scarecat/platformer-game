@@ -7,7 +7,7 @@ public class SaveSystem
 {
     private static string SavePath => Application.persistentDataPath + "/save.dat";
     
-    public static void SaveGame(PlayerHealth playerHealth, LevelManager levelManager)
+    public static void SaveGame(PlayerHealth playerHealth, PlayerUpgrades playerUpgrades, LevelManager levelManager)
     {
         try
         {
@@ -16,7 +16,12 @@ public class SaveSystem
                 playerHealth = playerHealth.CurrentHealth,
                 currentLevel = levelManager.Level,
                 entryPoint = levelManager.EntryPoint,
-                killedPersistentEnemyIds = levelManager.KilledPersistentEnemyIds.ToArray()
+                killedPersistentEnemyIds = levelManager.KilledPersistentEnemyIds.ToArray(),
+                pickedUpPersistentItemIds = levelManager.PickedUpPersistentItemIds.ToArray(),
+                totalExtraHealthAmount = playerUpgrades.totalExtraHealthAmount,
+                totalExtraJumpUpgrades = playerUpgrades.totalExtraJumpUpgrades,
+
+                
             };
 
             BinaryFormatter formatter = new BinaryFormatter();

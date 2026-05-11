@@ -1,29 +1,14 @@
 using UnityEngine;
 
-public class PermJumpPickup : Pickup
+public class PermJumpPickup : PermPickup
 {
-    public int extraJumpsAmount = 1;
-    //cokolwiek wpisać, byleby żeby było unikatowe
-    [Header("Unique ID")]
-    public string uniquePickupID;
+    [SerializeField] private int extraJumpsAmount;
 
-    private void Start()
-    {
-        if (PlayerPrefs.GetInt(uniquePickupID, 0) == 1)
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    protected override bool ApplyEffect(GameObject player)
+    protected override bool ApplyEffectPerm(GameObject player)
     {
         if (player.TryGetComponent(out PlayerUpgrades upgrades))
         {
             upgrades.UnlockExtraJump(extraJumpsAmount);
-
-            PlayerPrefs.SetInt(uniquePickupID, 1);
-            PlayerPrefs.Save();
-
             return true;
         }
         return false;
