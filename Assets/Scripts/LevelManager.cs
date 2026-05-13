@@ -33,14 +33,17 @@ public class LevelManager : MonoBehaviour
     private IEnumerator LoadLevelCoroutine(string levelName, string entryPointName)
     {
         isLoading = true;
-        yield return StartCoroutine(Fade(1f));
 
         //player.SetActive(false);
         if (currentLevel != null)
         {
+            yield return StartCoroutine(Fade(1f));
             yield return SceneManager.UnloadSceneAsync(currentLevel);
         }
-
+        else
+        {
+            SetFade(1f);
+        }
         var loadOperation = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
         yield return loadOperation;
         var confinementObject = GameObject.FindWithTag("CinemachineConfinement");
@@ -80,6 +83,13 @@ public class LevelManager : MonoBehaviour
             spawnPointName = entryPointName;
         }
         StartCoroutine(LoadLevelCoroutine(levelName, spawnPointName));
+    }
+    
+    private void SetFade(float alpha)
+    {
+        if (fadeCanvasGroup == null) return;
+        fadeCanvasGroup.alpha = alpha;
+        fadeCanvasGroup.blocksRaycasts = alpha != 0f;
     }
 
     private IEnumerator Fade(float targetAlpha)
