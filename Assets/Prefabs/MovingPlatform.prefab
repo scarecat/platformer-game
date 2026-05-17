@@ -139,11 +139,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   patrolPoints:
-  - {fileID: 192212630089261555}
-  - {fileID: 5038082194624996263}
+  - {x: 0.0023582913, y: 3.0625e-41}
+  - {x: 0.0023582298, y: 3.0625e-41}
   moveSpeed: 3
   destinationIndex: 0
-  attachedPlayerTransform: {fileID: 0}
 --- !u!61 &5193408349271136352
 BoxCollider2D:
   m_ObjectHideFlags: 0
