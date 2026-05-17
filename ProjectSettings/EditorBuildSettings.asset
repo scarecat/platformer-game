@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ExtraJumpUnlockLevel.unity
     guid: e6199c652f2402aad8351298729307d8
+  - enabled: 1
+    path: Assets/Scenes/Level4.unity
+    guid: 7feedff09e7ad9dec9017c7608f513c2
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 41be88efacf06b64195013c443201c10, type: 3}
   m_UseUCBPForAssetBundles: 0
