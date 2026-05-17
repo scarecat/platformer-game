@@ -135,13 +135,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5295393805382465858}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbb1ec636566f4db7824b8d92eb5ba01, type: 3}
+  m_Script: {fileID: 11500000, guid: 87f7c65627a1e0f9ea0e93ff366a7a3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  moveSpeed: 2
-  patrolPointReferences:
+  patrolPoints:
   - {fileID: 192212630089261555}
   - {fileID: 5038082194624996263}
+  moveSpeed: 3
+  destinationIndex: 0
+  attachedPlayerTransform: {fileID: 0}
 --- !u!61 &5193408349271136352
 BoxCollider2D:
   m_ObjectHideFlags: 0
