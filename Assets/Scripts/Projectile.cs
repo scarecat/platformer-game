@@ -22,7 +22,9 @@ public class Projectile : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         invertSpriteFlip = spriteRenderer.flipX;
-        Invoke(nameof(Kill), lifetime);
+        spriteRenderer.flipX = invertSpriteFlip ? direction.x > 0 : direction.x < 0;
+        //Invoke(nameof(Kill), lifetime);
+        Destroy(gameObject, lifetime);
     }
 
     public void Kill()
@@ -34,7 +36,7 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         transform.position = (Vector2)transform.position + (speed * Time.deltaTime * direction);
-        spriteRenderer.flipX = invertSpriteFlip ? direction.x > 0 : direction.x < 0;
+        //spriteRenderer.flipX = invertSpriteFlip ? direction.x > 0 : direction.x < 0;
     }
 
     void Handle(GameObject hitObject)

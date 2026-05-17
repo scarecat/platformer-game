@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
 
     private GameObject playerHitbox;
 
-    [SerializeField] public float baseSpeed = 8f;
+    public float baseSpeed = 8f;
     private float speedMultiplier = 1f;
     [SerializeField] private float jumpingPower = 16f;
     //private float fallLimit = -10f;
@@ -54,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Coroutine speedCoroutine;
     private Coroutine jumpCoroutine;
+    private Coroutine attackCoroutine;
 
     [SerializeField] private Transform groundCheck;
     //[SerializeField] private Transform respawnPoint;
@@ -80,9 +81,6 @@ public class PlayerMovement : MonoBehaviour
         currentExtraJumpCount = ExtraJumpCount;
 
         animator = GetComponent<Animator>();
-        jumpAction = InputSystem.actions.FindAction("Jump");
-        moveAction = InputSystem.actions.FindAction("Move");
-        blockAction = InputSystem.actions.FindAction("Block");
         playerEnergy = GetComponent<PlayerEnergy>();
     }
     
@@ -112,9 +110,9 @@ public class PlayerMovement : MonoBehaviour
 
     bool HandleAttack()
     {
-        if (attackAction.IsPressed())
+        if (attackAction.WasPressedThisFrame())
         {
-            StartCoroutine(Attack());
+            attackCoroutine = StartCoroutine(Attack());
             return true;
         }
         return false;
@@ -174,10 +172,10 @@ public class PlayerMovement : MonoBehaviour
             case PlayerState.Idle:
                 currentExtraJumpCount = ExtraJumpCount;
                 if (TryBlock()) break;
-                if (Mathf.Abs(movementInput.x) > 0.1f) { playerState = PlayerState.Running; break; }
-                else if (!IsGrounded()) { playerState = PlayerState.Falling; break; }
                 if (HandleAttack()) break;
                 if (HandleJumping()) break;
+                if (Mathf.Abs(movementInput.x) > 0.1f) { playerState = PlayerState.Running; break; }
+                else if (!IsGrounded()) { playerState = PlayerState.Falling; break; }
                 break;
             case PlayerState.Running:
                 if (TryBlock()) break;
@@ -260,6 +258,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void Knockback(Vector2 damageDirection)
     {
+        if(attackCoroutine != null)
+        {
+            StopCoroutine(attackCoroutine);
+            playerHitbox.SetActive(false);
+        }
+
         damageDirection.y += 2.0f;
 
         playerState = PlayerState.Knockback;
