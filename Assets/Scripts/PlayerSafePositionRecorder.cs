@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class PlayerSafePositionRecorder : MonoBehaviour
 {
-
-    private PlayerMovement playerMovement;
-
     [SerializeField] private float waitAfterDangerSeconds = 0.5f;
 
     private bool dangerLock = false;
@@ -14,24 +11,25 @@ public class PlayerSafePositionRecorder : MonoBehaviour
     public Vector3 SafePosition => safePosition;
     [SerializeField] private Transform[] safetyCheckTransforms;
 
+    private int groundLayerMask;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        groundLayerMask = LayerMask.GetMask("Ground");
     }
 
     private bool IsSafe()
     {
-        bool safe = true;
-
         foreach (var tform in safetyCheckTransforms)
         {
-            Collider2D col = Physics2D.OverlapCircle(tform.position, 0.1f, layerMask: LayerMask.GetMask("Ground"));
+            Collider2D col = Physics2D.OverlapCircle(tform.position, 0.1f, groundLayerMask);
             if (!col || col.CompareTag("Danger"))
             {
-                safe = false;
+                return false;
             }
         }
-        return safe;
+        return true;
     }
 
 
