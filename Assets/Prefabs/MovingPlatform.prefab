@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5038082194624996263}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: PlatformPoint2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 1783407213907263253}
   - component: {fileID: 3196607368799573848}
   - component: {fileID: 5193408349271136352}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: MovingPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 192212630089261555}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: PlatformPoint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
