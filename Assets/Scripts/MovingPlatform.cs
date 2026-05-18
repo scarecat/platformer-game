@@ -6,11 +6,14 @@ public class MovingPlatform : MonoBehaviour
     public float moveSpeed;
     public int destinationIndex = 0;
     private Transform attachedPlayerTransform = null;
+    private PlayerMovement attachedPlayerMovement = null;
+    private Transform playerOriginalAttachment = null;
 
     void Start()
     {
         patrolPoints[0] = transform.Find("PlatformPoint1").transform.position;
         patrolPoints[1] = transform.Find("PlatformPoint2").transform.position;
+        playerOriginalAttachment = GameObject.Find("PlayerAttachment").transform;
     }
 
     
@@ -25,7 +28,7 @@ public class MovingPlatform : MonoBehaviour
         var oldPos = transform.position;
         transform.position = Vector2.MoveTowards(transform.position, patrolPoints[destinationIndex], moveSpeed * Time.deltaTime);
         
-        if (attachedPlayerTransform != null)
+        if (attachedPlayerTransform != null && attachedPlayerMovement.playerState != PlayerState.Running)
         {
             attachedPlayerTransform.position -= Vector3.right * (oldPos.x - transform.position.x);
         }
@@ -41,6 +44,8 @@ public class MovingPlatform : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             attachedPlayerTransform = collision.gameObject.transform;
+            attachedPlayerMovement = attachedPlayerTransform.GetComponent<PlayerMovement>();
+            //attachedPlayerTransform.parent = transform;
         }
     }
 
@@ -48,7 +53,9 @@ public class MovingPlatform : MonoBehaviour
     {
         if (collision.gameObject.transform == attachedPlayerTransform)
         {
+            //attachedPlayerTransform.parent = playerOriginalAttachment;
             attachedPlayerTransform = null;
+            attachedPlayerMovement = null;
         }
     }
 }
