@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc2acaac6c5d45c9b52f770dfd9e6bfb, type: 3}
+  m_Name: GrassGround AutoTile Template
+  m_EditorClassIdentifier: Unity.2D.Tilemap.Extras.Editor::UnityEngine.Tilemaps.AutoTileTemplate
+  width: 512
+  height: 288
+  maskType: 1
+  sprites:
+  - x: 480
+    y: 0
+    mask: 216
+  - x: 32
+    y: 96
+    mask: 18
+  - x: 416
+    y: 32
+    mask: 438
+  - x: 480
+    y: 96
+    mask: 24
+  - x: 448
+    y: 32
+    mask: 511
+  - x: 448
+    y: 256
+    mask: 507
+  - x: 320
+    y: 128
+    mask: 56
+  - x: 448
+    y: 0
+    mask: 504
+  - x: 448
+    y: 224
+    mask: 255
+  - x: 448
+    y: 64
+    mask: 63
+  - x: 32
+    y: 64
+    mask: 146
+  - x: 480
+    y: 256
+    mask: 510
+  - x: 480
+    y: 224
+    mask: 447
+  - x: 448
+    y: 96
+    mask: 56
+  - x: 416
+    y: 64
+    mask: 54
+  - x: 480
+    y: 64
+    mask: 27
+  - x: 416
+    y: 0
+    mask: 432
+  - x: 416
+    y: 96
+    mask: 48
+  - x: 32
+    y: 32
+    mask: 144
+  - x: 480
+    y: 32
+    mask: 219
