@@ -44,6 +44,7 @@ public class LevelManager : MonoBehaviour
         {
             SetFade(1f);
         }
+        player.SetActive(false);
         var loadOperation = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
         yield return loadOperation;
         var confinementObject = GameObject.FindWithTag("CinemachineConfinement");
@@ -59,6 +60,7 @@ public class LevelManager : MonoBehaviour
 
         var playerCollider = player.GetComponent<Collider2D>();
         player.transform.SetPositionAndRotation(spawnPos.position + Vector3.up * 0.2f, Quaternion.identity);
+        player.SetActive(true);
         //player.SetActive(true);
         cinemachineCamera.CancelDamping();
 
