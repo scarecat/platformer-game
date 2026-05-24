@@ -39,19 +39,19 @@ public class MovingPlatform : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            attachedPlayerTransform = collision.gameObject.transform;
+            attachedPlayerTransform = other.gameObject.transform;
             attachedPlayerMovement = attachedPlayerTransform.GetComponent<PlayerMovement>();
             //attachedPlayerTransform.parent = transform;
         }
     }
 
-    void OnCollisionExit2D(Collision2D collision)
+    void OnTriggerExit2D(Collider2D other)
     {
-        if (collision.gameObject.transform == attachedPlayerTransform)
+        if (other.gameObject.transform == attachedPlayerTransform)
         {
             //attachedPlayerTransform.parent = playerOriginalAttachment;
             attachedPlayerTransform = null;

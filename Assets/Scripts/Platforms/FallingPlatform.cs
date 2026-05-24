@@ -29,9 +29,9 @@ public class FallingPlatform : MonoBehaviour
         interacted = false;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (interacted || !collision.collider.CompareTag("Player")) return;
+        if (interacted || !other.CompareTag("Player")) return;
         interacted = true;
         animator.Play(FallHash);
         StartCoroutine(RecoveryCoroutine());
