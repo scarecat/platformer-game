@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1851278408354531415
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6664048140108903881}
+  m_Layer: 0
+  m_Name: BossStopPointB
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6664048140108903881
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851278408354531415}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.6666667, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1938985023876349447}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7958733005156875863
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7631313735300826705}
+  m_Layer: 0
+  m_Name: BossStopPointA
+  m_TagString: Untagged
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7631313735300826705
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7958733005156875863}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.6666667, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1938985023876349447}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8421581963530005839
 GameObject:
   m_ObjectHideFlags: 0
@@ -14,9 +76,10 @@ GameObject:
   - component: {fileID: 271009899307680831}
   - component: {fileID: 4777470210521586337}
   - component: {fileID: 3666306190634714321}
+  - component: {fileID: 417408298491211815}
   m_Layer: 0
   m_Name: Boss
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,7 +96,9 @@ Transform:
   m_LocalPosition: {x: 12.41, y: -3.16, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7631313735300826705}
+  - {fileID: 6664048140108903881}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3162288506377749506
@@ -166,10 +231,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4079a56aef5af643b89e150d032ce77b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityHealth
-  maxHealth: 200
-  currentHealth: 200
-  dieOnZeroHealth: 1
-  cooldownTime: 0.25
+  maxHealth: 10
+  currentHealth: 10
+  dieOnZeroHealth: 0
+  cooldownTime: 1
   onHitObject: {fileID: 4453178341035513179, guid: 2abb48d039719b249a9cb8a147741889, type: 3}
   deathSound: {fileID: 0}
   hitSound: {fileID: 0}
@@ -192,8 +257,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6184d7b3cd878e1919e7d863f6885d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  speed: 2
+  speed: 4
   projectileToSpawn: {fileID: 5251962797893367903, guid: a35cc7e54bd8bae6ab4c5e2edfd3c4ce, type: 3}
   runTime: 5
   waitTime: 2
   projectileBurstsTime: 2
+  timeBetweenBursts: 0.4
+--- !u!114 &417408298491211815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8421581963530005839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbdce0e6881dbb6408a57fcf586c19b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterDamage
+  damage: 10
+  knockbackForce: 4

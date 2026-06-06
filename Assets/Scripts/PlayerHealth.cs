@@ -26,7 +26,13 @@ public class PlayerHealth : EntityHealth
       Instantiate(onHitObject, transform.position + Vector3.up * 0.5f, transform.rotation);
     }
 
+    
     public override bool TakeDamage(float amount, Vector2 damageDirection)
+    {
+        return TakeDamage(amount, damageDirection, 1.0f);
+    }
+    
+    public bool TakeDamage(float amount, Vector2 damageDirection, float knockbackForce)
     {
         if (onCooldown) return false;
 
@@ -56,7 +62,7 @@ public class PlayerHealth : EntityHealth
         }
         else
         {
-            player.Knockback(damageDirection);
+            player.Knockback(damageDirection * knockbackForce);
             return TakeDamage(amount); 
         }
 
