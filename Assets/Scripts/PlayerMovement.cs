@@ -62,6 +62,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float knockbackForce = 100.0f;
     [SerializeField] private float knockbackTimeSeconds = 1f;
 
+    private bool isWallSliding;
+    private float wallSlidingSpeed = 2f;
+    [SerializeField] private Transform wallCheck;
+    [SerializeField] private LayerMask wallLayer;
+
     public bool IsBlocking() => playerState == PlayerState.Blocking;
     public bool IsFacingRight() => isFacingRight;
 
@@ -205,6 +210,7 @@ public class PlayerMovement : MonoBehaviour
         FaceMovementDir();
         jumpedThisFrame = false;
 
+        WallSlide();
     }
 
     private bool TryBlock()
@@ -332,5 +338,25 @@ public class PlayerMovement : MonoBehaviour
     {
         ExtraJumpCount += amount;
         currentExtraJumpCount += amount;
+    }
+
+    private bool IsWalled()
+    {
+        return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
+    }
+
+    private void WallSlide()
+    {
+        if (IsWalled() && !IsGrounded() && movementInput.y != 0f)
+        {
+            jumpingPower = 16f;
+            isWallSliding = true;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -wallSlidingSpeed, float.MaxValue)); 
+        }
+        else
+        {
+            jumpingPower = 12f;
+            isWallSliding = false;
+        }
     }
 }
