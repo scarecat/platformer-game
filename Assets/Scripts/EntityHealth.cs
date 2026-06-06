@@ -12,6 +12,8 @@ public class EntityHealth : MonoBehaviour
     [SerializeField] public AudioClip deathSound;
     [SerializeField] public AudioClip hitSound;
 
+    [SerializeField] public bool invulnerable = false;
+
     public UnityEvent<float, float> OnHealthChanged;
     public UnityEvent OnDeath;
 
@@ -20,6 +22,8 @@ public class EntityHealth : MonoBehaviour
     public float HealthPercent => currentHealth / maxHealth;
     public bool IsAlive => currentHealth > 0;
     public bool onCooldown;
+    
+    private bool IgnoreDamage => onCooldown || invulnerable;
 
     private SpriteRenderer spriteRenderer;
 
@@ -46,12 +50,12 @@ public class EntityHealth : MonoBehaviour
 
     public virtual bool TakeDamage(float amount, Vector2 damageDirection)
     {
-        if (onCooldown) return false;
+        if (IgnoreDamage) return false;
         return TakeDamage(amount); 
     }
     public virtual bool TakeDamage(float amount)
     {
-        if (onCooldown) return false;
+        if (IgnoreDamage) return false;
         if (!IsAlive) return false;
 
         currentHealth = Mathf.Clamp(currentHealth - amount, 0f, maxHealth);
