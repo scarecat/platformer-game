@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class Projectile : MonoBehaviour
 {
     public Vector2 direction;
+    public bool allowPlayerKill = true;
 
     [SerializeField]
     private float damage = 4.0f;
@@ -60,6 +62,15 @@ public class Projectile : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider)
     {
         Handle(collider.gameObject);
+    }
+
+    public void PlayerKill()
+    {
+        if (allowPlayerKill)
+        {
+            Kill();
+        }
+        
     }
 }
 
