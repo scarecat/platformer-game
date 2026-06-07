@@ -1319,6 +1319,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6926439439711245908, guid: dc509504d10455fc29ed186e0cea3cfc, type: 3}
+      propertyPath: firePoint
+      value: 
+      objectReference: {fileID: 991840575}
+    - target: {fileID: 6926439439711245908, guid: dc509504d10455fc29ed186e0cea3cfc, type: 3}
+      propertyPath: fireballPrefab
+      value: 
+      objectReference: {fileID: 4795067589327428554, guid: 97f7d9ef932e72f41a275aaeb8c5ccb6, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1345,6 +1353,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d513f9f796161b46b480c03f6afb93f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerUpgrades
+--- !u!4 &991840575 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3516316001723657458, guid: dc509504d10455fc29ed186e0cea3cfc, type: 3}
+  m_PrefabInstance: {fileID: 991840571}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &991840576 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5183072036116527221, guid: dc509504d10455fc29ed186e0cea3cfc, type: 3}
@@ -2414,6 +2427,10 @@ PrefabInstance:
     - target: {fileID: 7427343123509870870, guid: ed39eeef9fe44484f83dc306697ee1e8, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7561341181344634903, guid: ed39eeef9fe44484f83dc306697ee1e8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

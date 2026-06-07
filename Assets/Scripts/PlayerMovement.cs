@@ -16,7 +16,8 @@ public enum PlayerState
     Falling,
     Blocking,
     Attacking,
-    Knockback
+    Knockback,
+    ChargingRanged
 }
 
 public class PlayerMovement : MonoBehaviour
@@ -45,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     private InputAction moveAction;
     private InputAction blockAction;
     private InputAction attackAction;
+    private InputAction rangedAction;
     private Animator animator;
     private Rigidbody2D rb;
     private Vector2 movementInput;
@@ -67,6 +69,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
 
+    [SerializeField] private GameObject fireballPrefab;
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private float requiredChargeTime = 1.0f;
+    [SerializeField] private float rangedEnergyCost = 20f;
+    private float currentChargeTime = 0f;
+
     public bool IsBlocking() => playerState == PlayerState.Blocking;
     public bool IsFacingRight() => isFacingRight;
 
@@ -77,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
         moveAction = InputSystem.actions.FindAction("Move");
         blockAction = InputSystem.actions.FindAction("Block");
         attackAction = InputSystem.actions.FindAction("Attack");
+        rangedAction = InputSystem.actions.FindAction("RangedAttack");
 
         jumpAction.performed += (ctx) => jumpedThisFrame = true;
 
@@ -88,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         playerEnergy = GetComponent<PlayerEnergy>();
     }
-    
+
     public Vector2 Velocity => rb.linearVelocity;
 
 
@@ -178,6 +187,13 @@ public class PlayerMovement : MonoBehaviour
                 currentExtraJumpCount = ExtraJumpCount;
                 if (TryBlock()) break;
                 if (HandleAttack()) break;
+                if (rangedAction.WasPressedThisFrame() && playerEnergy.CurrentEnergy >= rangedEnergyCost)
+                {
+                    playerState = PlayerState.ChargingRanged;
+                    currentChargeTime = 0f;
+                    //animator.SetBool("isCharging", true);
+                    break;
+                }
                 if (HandleJumping()) break;
                 if (Mathf.Abs(movementInput.x) > 0.1f) { playerState = PlayerState.Running; break; }
                 else if (!IsGrounded()) { playerState = PlayerState.Falling; break; }
@@ -199,6 +215,27 @@ public class PlayerMovement : MonoBehaviour
             case PlayerState.Blocking:
                 FaceMovementDir();
                 rb.linearVelocityX = 0.0f;
+                break;
+            case PlayerState.ChargingRanged:
+                StopVelocity();
+                FaceMovementDir();
+                if (rangedAction.IsPressed())
+                {
+                    currentChargeTime += Time.deltaTime;
+                }
+
+                if (rangedAction.WasReleasedThisFrame())
+                {
+                    //animator.SetBool("isCharging", false);
+                    if (currentChargeTime >= requiredChargeTime)
+                    {
+                        StartCoroutine(FireRanged());
+                    }
+                    else
+                    {
+                        playerState = PlayerState.Idle;
+                    }
+                }
                 break;
         }
 
@@ -264,10 +301,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void Knockback(Vector2 damageDirection)
     {
-        if(attackCoroutine != null)
+        if (attackCoroutine != null)
         {
             StopCoroutine(attackCoroutine);
             playerHitbox.SetActive(false);
+        }
+
+        if (playerState == PlayerState.ChargingRanged)
+        {
+            animator.SetBool("isCharging", false);
         }
 
         damageDirection.y += 2.0f;
@@ -294,7 +336,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void ApplySpeedBoost(float multiplier, float duration)
     {
-        if(speedCoroutine != null)
+        if (speedCoroutine != null)
         {
             StopCoroutine(speedCoroutine);
         }
@@ -351,12 +393,32 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpingPower = 16f;
             isWallSliding = true;
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -wallSlidingSpeed, float.MaxValue)); 
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -wallSlidingSpeed, float.MaxValue));
         }
         else
         {
             jumpingPower = 12f;
             isWallSliding = false;
         }
+    }
+
+    private IEnumerator FireRanged()
+    {
+        playerEnergy.ConsumeEnergy(rangedEnergyCost);
+
+        yield return new WaitForSeconds(0.15f);
+
+        if (fireballPrefab != null && firePoint != null)
+        {
+            GameObject fireball = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
+            if (fireball.TryGetComponent(out Projectile proj))
+            {
+                proj.direction = isFacingRight ? Vector2.right : Vector2.left;
+            }
+        }
+
+        yield return new WaitForSeconds(0.15f);
+
+        playerState = PlayerState.Idle;
     }
 }
