@@ -2,11 +2,15 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class PauseMenu : MonoBehaviour
 {
     public GameObject container;
+    public GameObject settingsMenu;
+    public Slider volumeSlider;
+    public Toggle fullscreenToggle;
 
     [Header("D¿wiêki")]
     public AudioClip pauseSound;
@@ -35,6 +39,12 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    public void SettingsButton()
+    {
+        container.SetActive(false);
+        settingsMenu.SetActive(true);
+    }
+
     public void MainMenuButton()
     {
         AudioManager.Instance.PlaySFX(clickSound);
@@ -48,5 +58,21 @@ public class PauseMenu : MonoBehaviour
         #else
         Application.Quit();
         #endif
+    }
+
+    public void ReturnButton()
+    {
+        container.SetActive(true);
+        settingsMenu.SetActive(false);
+    }
+
+    public void SetVolume(float volume)
+    {
+        AudioListener.volume = volume;
+    }
+
+    public void SetFullscreen(bool isFullScreen)
+    {
+        Screen.fullScreen = isFullScreen;
     }
 }
