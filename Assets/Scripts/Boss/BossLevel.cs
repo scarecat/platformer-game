@@ -11,14 +11,12 @@ public class BossLevel : MonoBehaviour
     void Start()
     {
         bossHealth = GameObject.Find("Boss").GetComponent<EntityHealth>();
+        
         bossHealth.OnDeath.AddListener(OnBossDeath);
-        bossHealth.OnHealthChanged.AddListener(OnBossHealthChanged);
+        var bar = GameObject.Find("BossBar").GetComponent<BossBar>();
+        bar.TrackedHealth = bossHealth;
     }
 
-    private void OnBossHealthChanged(float health, float maxHealth)
-    {
-        Debug.Log($"Boss health: {health}/{maxHealth}");
-    }
 
     private void OnBossDeath()
     {
