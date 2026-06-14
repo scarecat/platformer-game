@@ -838,7 +838,6 @@ RectTransform:
   - {fileID: 550760605}
   - {fileID: 1826867398}
   - {fileID: 410374485}
-  - {fileID: 768661266}
   - {fileID: 916108491}
   - {fileID: 1140526865}
   m_Father: {fileID: 0}
@@ -939,51 +938,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 362263128}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &768661265
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 768661266}
-  - component: {fileID: 768661267}
-  m_Layer: 0
-  m_Name: BossBar
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &768661266
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 768661265}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -960, y: -505.73425, z: 0}
-  m_LocalScale: {x: 2.2377622, y: 2.2377622, z: 2.2377622}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 747186834}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &768661267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 768661265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c21bd4315125790689e5798f2f94d10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  trackedHealth: {fileID: 0}
 --- !u!1 &879807239
 GameObject:
   m_ObjectHideFlags: 0
