@@ -1,9 +1,12 @@
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class WinScreen : MonoBehaviour
 {
     public GameObject container;
+    public TextMeshProUGUI scoreText;
 
     void Start()
     {
@@ -14,6 +17,38 @@ public class WinScreen : MonoBehaviour
     {
         container.SetActive(true);
         Time.timeScale = 0f;
+
+        CalculateAndDisplayScore();
+    }
+
+    private void CalculateAndDisplayScore()
+    {
+        int finalScore = 1000;
+
+        PlayerHealth player = FindAnyObjectByType<PlayerHealth>();
+        if(player  != null )
+        {
+            float healthPercentage = player.CurrentHealth/player.MaxHealth;
+            finalScore += Mathf.RoundToInt(healthPercentage * 500);
+        }
+
+        LevelManager levelManager = FindAnyObjectByType<LevelManager>();
+        if (levelManager != null)
+        {
+            if(levelManager.KilledPersistentEnemyIds != null)
+            {
+                finalScore += levelManager.KilledPersistentEnemyIds.Count * 50;
+            }
+            if(levelManager.PickedUpPersistentItemIds != null)
+            {
+                finalScore += levelManager.PickedUpPersistentItemIds.Count * 100;
+            }
+        }
+
+        if(scoreText != null)
+        {
+            scoreText.text = "SCORE: " + finalScore.ToString();
+        }
     }
 
     public void MainMenuButton()
