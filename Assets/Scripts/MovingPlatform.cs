@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
@@ -8,6 +9,9 @@ public class MovingPlatform : MonoBehaviour
     private Transform attachedPlayerTransform = null;
     private PlayerMovement attachedPlayerMovement = null;
     private Transform playerOriginalAttachment = null;
+
+    [SerializeField] private bool waitUntilInteracted = false;
+    private bool interacted = false;
 
     void Start()
     {
@@ -24,7 +28,7 @@ public class MovingPlatform : MonoBehaviour
 
     void Update()
     {
-
+        if (waitUntilInteracted && !interacted) return;
         var oldPos = transform.position;
         transform.position = Vector2.MoveTowards(transform.position, patrolPoints[destinationIndex], moveSpeed * Time.deltaTime);
         
@@ -43,6 +47,7 @@ public class MovingPlatform : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            interacted = true;
             attachedPlayerTransform = other.gameObject.transform;
             attachedPlayerMovement = attachedPlayerTransform.GetComponent<PlayerMovement>();
             //attachedPlayerTransform.parent = transform;
