@@ -22,11 +22,10 @@ public class BossBar : MonoBehaviour
 
             bossBarSliderObj.SetActive(trackedHealth != null);
             
-            bossBarSlider.maxValue = trackedHealth.MaxHealth;
-            bossBarSlider.value = trackedHealth.CurrentHealth;
-
             if (trackedHealth != null)
             {
+                bossBarSlider.maxValue = trackedHealth.MaxHealth;
+                bossBarSlider.value = trackedHealth.CurrentHealth;
                 trackedHealth.OnHealthChanged.AddListener(OnTrackedHealthChanged);
                 trackedHealth.OnDeath.AddListener(OnTrackedDeath);
             }
