@@ -20,8 +20,7 @@ public class SaveSystem
                 pickedUpPersistentItemIds = levelManager.PickedUpPersistentItemIds.ToArray(),
                 totalExtraHealthAmount = playerUpgrades.totalExtraHealthAmount,
                 totalExtraJumpUpgrades = playerUpgrades.totalExtraJumpUpgrades,
-
-                
+                totalPlayTime = levelManager.TotalPlayTime,
             };
 
             BinaryFormatter formatter = new BinaryFormatter();
