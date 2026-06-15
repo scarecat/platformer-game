@@ -18,7 +18,7 @@ public class LevelManager : MonoBehaviour
     [Header("Fade Transition")]
     [SerializeField] private CanvasGroup fadeCanvasGroup;
     [SerializeField] private float fadeDuration = 0.5f;
-    
+
     private string currentLevel = null;
     private string currentEntryPoint = null;
     public string Level => currentLevel;
@@ -29,6 +29,8 @@ public class LevelManager : MonoBehaviour
     private List<string> pickedUpPersistentItemIds;
     public List<string> KilledPersistentEnemyIds => killedPersistentEnemyIds;
     public List<string> PickedUpPersistentItemIds => pickedUpPersistentItemIds;
+
+    public float TotalPlayTime { get; private set; }
 
     private IEnumerator LoadLevelCoroutine(string levelName, string entryPointName)
     {
@@ -141,8 +143,11 @@ public class LevelManager : MonoBehaviour
                 pickedUpPersistentItemIds = new string[0],
                 totalExtraHealthAmount = 0,
                 totalExtraJumpUpgrades = 0,
+                totalPlayTime = 0f
             };
         }
+
+        TotalPlayTime = currentSaveData.totalPlayTime;
 
         playerHealth.SetHealth(currentSaveData.playerHealth);
         playerUpgrades.UnlockExtraJump(currentSaveData.totalExtraJumpUpgrades);
@@ -172,6 +177,6 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        TotalPlayTime += Time.deltaTime;
     }
 }

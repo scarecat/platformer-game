@@ -11,4 +11,6 @@ public class SaveData
 
     public int totalExtraJumpUpgrades = 0;
     public float totalExtraHealthAmount = 0f;
+
+    public float totalPlayTime = 0f;
 }
