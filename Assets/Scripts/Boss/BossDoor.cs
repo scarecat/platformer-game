@@ -27,7 +27,7 @@ public class BossDoor : MonoBehaviour
 
     private void CheckKilled()
     {
-        if (toKill == 0 || killCount >= toKill || true)
+        if (toKill == 0 || killCount >= toKill)
         {
             bossTrigger.enabled = true;
             transform.Find("OpenSprite").GetComponent<SpriteRenderer>().enabled = true;
