@@ -24,7 +24,10 @@ public class PlayerHitbox : MonoBehaviour
     {
         if (other.CompareTag("Projectile") && other.TryGetComponent(out Projectile projectile))
         {
-            projectile.Kill();
+            if (projectile.allowPlayerKill)
+            {
+                projectile.Kill();
+            }
         }
         else if (other.CompareTag("Enemy") && other.TryGetComponent(out EntityHealth health))
         {
